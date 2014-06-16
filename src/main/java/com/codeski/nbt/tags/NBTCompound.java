@@ -1,26 +1,122 @@
 package com.codeski.nbt.tags;
 
-public class NBTCompound extends NBT {
-	NBT[] payload;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
-	public NBTCompound(String name, NBT[] payload) {
+public class NBTCompound extends NBT implements Set<NBT> {
+	Set<NBT> payload;
+
+	public NBTCompound(String name, Set<NBT> payload) {
 		super(name);
 		this.payload = payload;
 	}
 
 	@Override
-	public NBT[] getPayload() {
+	public boolean add(NBT e) {
+		return this.getPayload().add(e);
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends NBT> c) {
+		return this.getPayload().addAll(c);
+	}
+
+	@Override
+	public void clear() {
+		this.getPayload().clear();
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		return this.getPayload().contains(o);
+	}
+
+	public boolean contains(String name) {
+		for (NBT e : this.getPayload())
+			if (e.getName().equals(name))
+				return true;
+		return false;
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		return this.getPayload().containsAll(c);
+	}
+
+	public NBT get(String name) {
+		for (NBT e : this.getPayload())
+			if (e.getName().equals(name))
+				return e;
+		return null;
+	}
+
+	@Override
+	public Set<NBT> getPayload() {
 		return payload;
 	}
 
-	public void setPayload(NBT[] payload) {
+	@Override
+	public boolean isEmpty() {
+		return this.getPayload().isEmpty();
+	}
+
+	@Override
+	public Iterator<NBT> iterator() {
+		return this.getPayload().iterator();
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		return this.getPayload().remove(o);
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		return this.getPayload().removeAll(c);
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		return this.getPayload().retainAll(c);
+	}
+
+	public void setPayload(Set<NBT> payload) {
 		this.payload = payload;
+	}
+
+	@Override
+	public int size() {
+		return this.getPayload().size();
+	}
+
+	@Override
+	public Object[] toArray() {
+		return this.getPayload().toArray();
+	}
+
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return this.getPayload().toArray(a);
+	}
+
+	@Override
+	public String toJSON() {
+		String str = "\"" + this.getName() + "\": { ";
+		for (NBT e : this.getPayload())
+			if (e instanceof NBT)
+				str += e.toJSON() + ", ";
+			else
+				str += "\"" + e.getName() + "\": " + e.getPayload();
+		str = str.substring(0, str.length() - 2);
+		str += " }";
+		return str;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[Compound] " + name + ": " + (payload.length - 1) + " entries\n");
+		sb.append("[Compound] " + name + ": " + this.size() + " entries\n");
 		for (NBT nbt : payload)
 			sb.append(nbt + "\n");
 		return sb.substring(0, sb.length() - 1);
