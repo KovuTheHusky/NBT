@@ -6,8 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import com.codeski.nbt.tags.NBT;
@@ -73,7 +73,7 @@ public class NBTReader {
 				return new NBTList(null, list);
 			case COMPOUND:
 				NBT tag;
-				Set<NBT> tags = new HashSet<NBT>();
+				List<NBT> tags = new ArrayList<NBT>();
 				while (!((tag = this.readTag()) instanceof NBTEnd))
 					tags.add(tag);
 				return new NBTCompound(null, tags);
@@ -130,7 +130,7 @@ public class NBTReader {
 					return new NBTList(name, list);
 				case COMPOUND:
 					NBT tag;
-					Set<NBT> tags = new HashSet<NBT>();
+					List<NBT> tags = new ArrayList<NBT>();
 					while (!((tag = this.readTag()) instanceof NBTEnd))
 						tags.add(tag);
 					return new NBTCompound(name, tags);

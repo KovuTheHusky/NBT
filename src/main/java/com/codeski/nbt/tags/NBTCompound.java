@@ -1,15 +1,24 @@
 package com.codeski.nbt.tags;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
+import java.util.ListIterator;
 
-public class NBTCompound extends NBT implements Set<NBT> {
-	private Set<NBT> payload;
+public class NBTCompound extends NBT implements List<NBT> {
+	private List<NBT> payload;
 
-	public NBTCompound(String name, Set<NBT> payload) {
+	public NBTCompound(String name, List<NBT> payload) {
 		super(name);
 		this.payload = payload;
+	}
+
+	@Override
+	public void add(int index, NBT element) {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -20,6 +29,12 @@ public class NBTCompound extends NBT implements Set<NBT> {
 	@Override
 	public boolean addAll(Collection<? extends NBT> c) {
 		return this.getPayload().addAll(c);
+	}
+
+	@Override
+	public boolean addAll(int index, Collection<? extends NBT> c) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -44,6 +59,12 @@ public class NBTCompound extends NBT implements Set<NBT> {
 		return this.getPayload().containsAll(c);
 	}
 
+	@Override
+	public NBT get(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public NBT get(String name) {
 		for (NBT e : this.getPayload())
 			if (e.getName().equals(name))
@@ -52,8 +73,14 @@ public class NBTCompound extends NBT implements Set<NBT> {
 	}
 
 	@Override
-	public Set<NBT> getPayload() {
+	public List<NBT> getPayload() {
 		return payload;
+	}
+
+	@Override
+	public int indexOf(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -64,6 +91,30 @@ public class NBTCompound extends NBT implements Set<NBT> {
 	@Override
 	public Iterator<NBT> iterator() {
 		return this.getPayload().iterator();
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ListIterator<NBT> listIterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ListIterator<NBT> listIterator(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public NBT remove(int index) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -81,13 +132,25 @@ public class NBTCompound extends NBT implements Set<NBT> {
 		return this.getPayload().retainAll(c);
 	}
 
-	public void setPayload(Set<NBT> payload) {
+	@Override
+	public NBT set(int index, NBT element) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setPayload(List<NBT> payload) {
 		this.payload = payload;
 	}
 
 	@Override
 	public int size() {
 		return this.getPayload().size();
+	}
+
+	@Override
+	public List<NBT> subList(int fromIndex, int toIndex) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -111,6 +174,40 @@ public class NBTCompound extends NBT implements Set<NBT> {
 		str = str.substring(0, str.length() - 2);
 		str += " }";
 		return str;
+	}
+
+	@Override
+	public byte[] toNBT() {
+		System.out.println("Writing tag data for " + name + "...");
+		int bytesForName = 0;
+		byte[] name = null;
+		short length = 0;
+		if (this.name != null) {
+			name = this.name.getBytes(Charset.forName("UTF-8"));
+			length = (short) name.length;
+			bytesForName = 2 + length;
+		}
+		ByteBuffer bb = ByteBuffer.allocate(1 + bytesForName);
+		bb.put((byte) 0xA);
+		if (this.name != null) {
+			bb.putShort(length);
+			bb.put(name);
+		}
+		List<byte[]> bal = new ArrayList<byte[]>();
+		int bytecount = 0;
+		for (NBT e : payload) {
+			byte[] eba = e.toNBT();
+			bal.add(eba);
+			bytecount += eba.length;
+		}
+		ByteBuffer combo = ByteBuffer.allocate(bytecount + 1);
+		for (byte[] append : bal)
+			combo.put(append);
+		combo.put((byte) 0x0);
+		byte[] fin = new byte[bb.array().length + combo.array().length];
+		System.arraycopy(bb.array(), 0, fin, 0, bb.array().length);
+		System.arraycopy(combo.array(), 0, fin, bb.array().length, combo.array().length);
+		return fin;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.codeski.nbt.tags;
 
+
 public abstract class NBT {
 	protected String name;
 
@@ -28,6 +29,8 @@ public abstract class NBT {
 		else
 			return this instanceof NBTString ? "\"" + this.getPayload() + "\"" : this.getPayload().toString();
 	}
+
+	public abstract byte[] toNBT();
 
 	public String toXML() {
 		if (this.getName() != null)

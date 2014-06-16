@@ -25,12 +25,10 @@ public class NBTWriter {
 		return true;
 	}
 
-	public boolean writeNBT(NBT root) {
-		try {
-			DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public boolean writeNBT(NBT root) throws FileNotFoundException, IOException {
+		DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
+		out.write(root.toNBT());
+		out.close();
 		return true;
 	}
 

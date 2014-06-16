@@ -10,7 +10,7 @@ public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
-		File f = new File(args[0]);
+		File f = new File("level.dat");
 		System.out.println("Start reading " + f.getAbsolutePath() + "...");
 		NBTCompound root = new NBTReader(f).read();
 		System.out.println("Finished reading " + f.getAbsolutePath() + "...");
@@ -20,5 +20,9 @@ public class Main
 		System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + root.toXML());
 		System.out.println();
 		System.out.println("Done!");
+		File test = new File("test.dat");
+		NBTWriter out = new NBTWriter(test);
+		out.writeNBT(root);
+		System.out.println("{ " + new NBTReader(test).read().toJSON() + " }");
 	}
 }

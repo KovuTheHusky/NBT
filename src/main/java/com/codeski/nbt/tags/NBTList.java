@@ -1,5 +1,10 @@
 package com.codeski.nbt.tags;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+
 public class NBTList extends NBT {
 	private NBT[] payload;
 
@@ -25,6 +30,34 @@ public class NBTList extends NBT {
 		str = str.substring(0, str.length() - 2);
 		str += " ]";
 		return str;
+	}
+
+	@Override
+	public byte[] toNBT() {
+		int bytesForName = 0;
+		byte[] name = null;
+		short length = 0;
+		if (this.name != null) {
+			name = this.name.getBytes(Charset.forName("UTF-8"));
+			length = (short) name.length;
+			bytesForName = 2 + length;
+		}
+		ByteBuffer bb = ByteBuffer.allocate(1 + bytesForName + 1 + 4);
+		bb.put((byte) 0x9);
+		if (this.name != null) {
+			bb.putShort(length);
+			bb.put(name);
+		}
+		List<byte[]> bal = new ArrayList<byte[]>();
+		for (NBT e : payload)
+			bal.add(e.toNBT());
+		ByteBuffer combo = ByteBuffer.allocate(bal.size() * bal.get(0).length);
+		for (byte[] append : bal)
+			combo.put(append);
+		byte[] fin = new byte[bb.array().length + combo.array().length];
+		System.arraycopy(bb.array(), 0, fin, 0, bb.array().length);
+		System.arraycopy(combo.array(), 0, fin, bb.array().length, combo.array().length);
+		return fin;
 	}
 
 	@Override

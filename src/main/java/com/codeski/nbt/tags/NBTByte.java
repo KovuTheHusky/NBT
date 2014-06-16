@@ -1,5 +1,8 @@
 package com.codeski.nbt.tags;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+
 public class NBTByte extends NBT {
 	private Byte payload;
 
@@ -15,6 +18,26 @@ public class NBTByte extends NBT {
 
 	public void setPayload(byte payload) {
 		this.payload = payload;
+	}
+
+	@Override
+	public byte[] toNBT() {
+		int bytesForName = 0;
+		byte[] name = null;
+		short length = 0;
+		if (this.name != null) {
+			name = this.name.getBytes(Charset.forName("UTF-8"));
+			length = (short) name.length;
+			bytesForName = 2 + length;
+		}
+		ByteBuffer bb = ByteBuffer.allocate(1 + bytesForName + 1);
+		bb.put((byte) 0x1);
+		if (this.name != null) {
+			bb.putShort(length);
+			bb.put(name);
+		}
+		bb.put(payload);
+		return bb.array();
 	}
 
 	@Override
