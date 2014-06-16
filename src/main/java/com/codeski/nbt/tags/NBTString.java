@@ -1,7 +1,7 @@
 package com.codeski.nbt.tags;
 
 public class NBTString extends NBT {
-	String payload;
+	private String payload;
 
 	public NBTString(String name, String payload) {
 		super(name);

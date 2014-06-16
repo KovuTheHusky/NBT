@@ -1,7 +1,7 @@
 package com.codeski.nbt.tags;
 
 public class NBTDouble extends NBT {
-	Double payload;
+	private Double payload;
 
 	public NBTDouble(String name, double payload) {
 		super(name);

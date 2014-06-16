@@ -23,6 +23,16 @@ public abstract class NBT {
 	}
 
 	public String toJSON() {
-		return "\"" + this.getName() + "\": " + (this instanceof NBTString ? "\"" + this.getPayload() + "\"" : this.getPayload());
+		if (this.getName() != null)
+			return "\"" + this.getName() + "\": " + (this instanceof NBTString ? "\"" + this.getPayload() + "\"" : this.getPayload());
+		else
+			return this instanceof NBTString ? "\"" + this.getPayload() + "\"" : this.getPayload().toString();
+	}
+
+	public String toXML() {
+		if (this.getName() != null)
+			return "<" + this.getClass().getSimpleName() + " name=\"" + this.getName() + "\" payload=\"" + this.getPayload() + "\" />";
+		else
+			return "<" + this.getClass().getSimpleName() + " payload=\"" + this.getPayload() + "\" />";
 	}
 }

@@ -1,7 +1,7 @@
 package com.codeski.nbt.tags;
 
 public class NBTFloat extends NBT {
-	Float payload;
+	private Float payload;
 
 	public NBTFloat(String name, float payload) {
 		super(name);

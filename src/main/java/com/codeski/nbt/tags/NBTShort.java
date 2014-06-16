@@ -1,7 +1,7 @@
 package com.codeski.nbt.tags;
 
 public class NBTShort extends NBT {
-	Short payload;
+	private Short payload;
 
 	public NBTShort(String name, short payload) {
 		super(name);

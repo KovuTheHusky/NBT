@@ -1,7 +1,7 @@
 package com.codeski.nbt.tags;
 
 public class NBTLong extends NBT {
-	Long payload;
+	private Long payload;
 
 	public NBTLong(String name, long payload) {
 		super(name);

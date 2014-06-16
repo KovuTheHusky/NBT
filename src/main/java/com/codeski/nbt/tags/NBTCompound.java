@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class NBTCompound extends NBT implements Set<NBT> {
-	Set<NBT> payload;
+	private Set<NBT> payload;
 
 	public NBTCompound(String name, Set<NBT> payload) {
 		super(name);
@@ -102,12 +102,12 @@ public class NBTCompound extends NBT implements Set<NBT> {
 
 	@Override
 	public String toJSON() {
-		String str = "\"" + this.getName() + "\": { ";
+		String str = "";
+		if (this.getName() != null)
+			str += "\"" + this.getName() + "\": ";
+		str += "{ ";
 		for (NBT e : this.getPayload())
-			if (e instanceof NBT)
-				str += e.toJSON() + ", ";
-			else
-				str += "\"" + e.getName() + "\": " + e.getPayload();
+			str += e.toJSON() + ", ";
 		str = str.substring(0, str.length() - 2);
 		str += " }";
 		return str;
@@ -120,5 +120,18 @@ public class NBTCompound extends NBT implements Set<NBT> {
 		for (NBT nbt : payload)
 			sb.append(nbt + "\n");
 		return sb.substring(0, sb.length() - 1);
+	}
+
+	@Override
+	public String toXML() {
+		String str = "";
+		if (this.getName() != null)
+			str += "<" + this.getClass().getSimpleName() + " name=\"" + this.getName() + "\">";
+		else
+			str += "<" + this.getClass().getSimpleName() + ">";
+		for (NBT e : this.getPayload())
+			str += e.toXML();
+		str += "</" + this.getClass().getSimpleName() + ">";
+		return str;
 	}
 }

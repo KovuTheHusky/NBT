@@ -1,7 +1,7 @@
 package com.codeski.nbt.tags;
 
 public class NBTByte extends NBT {
-	Byte payload;
+	private Byte payload;
 
 	public NBTByte(String name, byte payload) {
 		super(name);

@@ -1,7 +1,7 @@
 package com.codeski.nbt.tags;
 
 public class NBTInteger extends NBT {
-	Integer payload;
+	private Integer payload;
 
 	public NBTInteger(String name, int payload) {
 		super(name);
