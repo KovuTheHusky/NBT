@@ -10,6 +10,7 @@ import java.util.ListIterator;
 
 public class NBTCompound extends NBT implements List<NBT> {
 	private List<NBT> payload;
+	private final byte type = 10;
 
 	public NBTCompound(String name, List<NBT> payload) {
 		super(name);
@@ -75,6 +76,11 @@ public class NBTCompound extends NBT implements List<NBT> {
 	@Override
 	public List<NBT> getPayload() {
 		return payload;
+	}
+
+	@Override
+	public byte getType() {
+		return type;
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 
 public class NBTByteArray extends NBT {
 	private byte[] payload;
+	private final byte type = 7;
 
 	public NBTByteArray(String name, byte[] payload) {
 		super(name);
@@ -14,6 +15,11 @@ public class NBTByteArray extends NBT {
 	@Override
 	public byte[] getPayload() {
 		return payload;
+	}
+
+	@Override
+	public byte getType() {
+		return type;
 	}
 
 	public void setPayload(byte[] payload) {

@@ -3,6 +3,8 @@ package com.codeski.nbt.tags;
 import java.nio.ByteBuffer;
 
 public class NBTEnd extends NBT {
+	private final byte type = 0;
+
 	public NBTEnd() {
 		super(null);
 	}
@@ -10,6 +12,11 @@ public class NBTEnd extends NBT {
 	@Override
 	public Object getPayload() {
 		return null;
+	}
+
+	@Override
+	public byte getType() {
+		return type;
 	}
 
 	@Override

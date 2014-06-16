@@ -7,6 +7,7 @@ import java.util.List;
 
 public class NBTList extends NBT {
 	private NBT[] payload;
+	private final byte type = 9;
 
 	public NBTList(String name, NBT[] payload) {
 		super(name);
@@ -16,6 +17,11 @@ public class NBTList extends NBT {
 	@Override
 	public NBT[] getPayload() {
 		return payload;
+	}
+
+	@Override
+	public byte getType() {
+		return type;
 	}
 
 	public void setPayload(NBT[] payload) {
@@ -48,6 +54,8 @@ public class NBTList extends NBT {
 			bb.putShort(length);
 			bb.put(name);
 		}
+		bb.put(payload[0].getType());
+		bb.putInt(payload.length);
 		List<byte[]> bal = new ArrayList<byte[]>();
 		int bytecount = 0;
 		for (NBT e : payload) {

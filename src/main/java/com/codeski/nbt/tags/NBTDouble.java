@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 
 public class NBTDouble extends NBT {
 	private Double payload;
+	private final byte type = 6;
 
 	public NBTDouble(String name, double payload) {
 		super(name);
@@ -14,6 +15,11 @@ public class NBTDouble extends NBT {
 	@Override
 	public Double getPayload() {
 		return payload;
+	}
+
+	@Override
+	public byte getType() {
+		return type;
 	}
 
 	public void setPayload(double payload) {

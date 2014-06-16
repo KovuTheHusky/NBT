@@ -1,6 +1,5 @@
 package com.codeski.nbt.tags;
 
-
 public abstract class NBT {
 	protected String name;
 
@@ -18,6 +17,8 @@ public abstract class NBT {
 	}
 
 	public abstract Object getPayload();
+
+	public abstract byte getType();
 
 	public void setName(String name) {
 		this.name = name;

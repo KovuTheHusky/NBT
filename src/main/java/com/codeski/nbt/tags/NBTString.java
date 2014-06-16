@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 
 public class NBTString extends NBT {
 	private String payload;
+	private final byte type = 8;
 
 	public NBTString(String name, String payload) {
 		super(name);
@@ -20,6 +21,11 @@ public class NBTString extends NBT {
 	@Override
 	public String getPayload() {
 		return payload;
+	}
+
+	@Override
+	public byte getType() {
+		return type;
 	}
 
 	public void setPayload(String payload) {
