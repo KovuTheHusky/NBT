@@ -13,21 +13,24 @@ import com.codeski.nbt.tags.NBT;
 public class NBTWriter {
 	public static final int END = 0, BYTE = 1, SHORT = 2, INTEGER = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, BYTE_ARRAY = 7, STRING = 8, LIST = 9, COMPOUND = 10, INTEGER_ARRAY = 11;
 	private final File file;
-	private DataOutputStream out;
 
 	public NBTWriter(File file) throws FileNotFoundException {
 		this.file = file;
-		try {
-			out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public boolean writeJSON(NBT root) throws IOException {
 		PrintWriter out = new PrintWriter(file);
 		out.println("{ " + root.toJSON() + " }");
 		out.close();
+		return true;
+	}
+
+	public boolean writeNBT(NBT root) {
+		try {
+			DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 

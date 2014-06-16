@@ -36,8 +36,8 @@ public class NBTReader {
 		}
 	}
 
-	public NBT read() throws IOException {
-		return this.readTag();
+	public NBTCompound read() throws IOException {
+		return (NBTCompound) this.readTag();
 	}
 
 	private NBT readPayload(final byte type) throws IOException {

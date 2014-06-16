@@ -12,7 +12,7 @@ public class Main
 	{
 		File f = new File(args[0]);
 		System.out.println("Start reading " + f.getAbsolutePath() + "...");
-		NBTCompound root = (NBTCompound) new NBTReader(f).read();
+		NBTCompound root = new NBTReader(f).read();
 		System.out.println("Finished reading " + f.getAbsolutePath() + "...");
 		System.out.println();
 		System.out.println("{ " + root.toJSON() + " }");
