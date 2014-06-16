@@ -178,18 +178,17 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public byte[] toNBT() {
-		System.out.println("Writing tag data for " + name + "...");
 		int bytesForName = 0;
 		byte[] name = null;
 		short length = 0;
 		if (this.name != null) {
 			name = this.name.getBytes(Charset.forName("UTF-8"));
 			length = (short) name.length;
-			bytesForName = 2 + length;
+			bytesForName = 1 + 2 + length;
 		}
-		ByteBuffer bb = ByteBuffer.allocate(1 + bytesForName);
-		bb.put((byte) 0xA);
+		ByteBuffer bb = ByteBuffer.allocate(bytesForName);
 		if (this.name != null) {
+			bb.put((byte) 0xA);
 			bb.putShort(length);
 			bb.put(name);
 		}

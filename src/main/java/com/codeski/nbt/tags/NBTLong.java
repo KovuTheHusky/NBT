@@ -28,11 +28,11 @@ public class NBTLong extends NBT {
 		if (this.name != null) {
 			name = this.name.getBytes(Charset.forName("UTF-8"));
 			length = (short) name.length;
-			bytesForName = 2 + length;
+			bytesForName = 1 + 2 + length;
 		}
-		ByteBuffer bb = ByteBuffer.allocate(1 + bytesForName + 8);
-		bb.put((byte) 0x4);
+		ByteBuffer bb = ByteBuffer.allocate(bytesForName + 8);
 		if (this.name != null) {
+			bb.put((byte) 0x4);
 			bb.putShort(length);
 			bb.put(name);
 		}

@@ -40,18 +40,22 @@ public class NBTList extends NBT {
 		if (this.name != null) {
 			name = this.name.getBytes(Charset.forName("UTF-8"));
 			length = (short) name.length;
-			bytesForName = 2 + length;
+			bytesForName = 1 + 2 + length;
 		}
-		ByteBuffer bb = ByteBuffer.allocate(1 + bytesForName + 1 + 4);
-		bb.put((byte) 0x9);
+		ByteBuffer bb = ByteBuffer.allocate(bytesForName + 1 + 4);
 		if (this.name != null) {
+			bb.put((byte) 0x9);
 			bb.putShort(length);
 			bb.put(name);
 		}
 		List<byte[]> bal = new ArrayList<byte[]>();
-		for (NBT e : payload)
-			bal.add(e.toNBT());
-		ByteBuffer combo = ByteBuffer.allocate(bal.size() * bal.get(0).length);
+		int bytecount = 0;
+		for (NBT e : payload) {
+			byte[] eba = e.toNBT();
+			bal.add(eba);
+			bytecount += eba.length;
+		}
+		ByteBuffer combo = ByteBuffer.allocate(bytecount);
 		for (byte[] append : bal)
 			combo.put(append);
 		byte[] fin = new byte[bb.array().length + combo.array().length];

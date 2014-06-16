@@ -10,16 +10,13 @@ public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
-		File f = new File("level.dat");
+		File f = new File("Stronghold.dat");
 		System.out.println("Start reading " + f.getAbsolutePath() + "...");
 		NBTCompound root = new NBTReader(f).read();
 		System.out.println("Finished reading " + f.getAbsolutePath() + "...");
 		System.out.println();
 		System.out.println("{ " + root.toJSON() + " }");
 		System.out.println();
-		System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + root.toXML());
-		System.out.println();
-		System.out.println("Done!");
 		File test = new File("test.dat");
 		NBTWriter out = new NBTWriter(test);
 		out.writeNBT(root);

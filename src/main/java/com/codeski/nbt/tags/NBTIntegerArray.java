@@ -38,11 +38,11 @@ public class NBTIntegerArray extends NBT {
 		if (this.name != null) {
 			name = this.name.getBytes(Charset.forName("UTF-8"));
 			length = (short) name.length;
-			bytesForName = 2 + length;
+			bytesForName = 1 + 2 + length;
 		}
-		ByteBuffer bb = ByteBuffer.allocate(1 + bytesForName + 4 + 4 * payload.length);
-		bb.put((byte) 0xB);
+		ByteBuffer bb = ByteBuffer.allocate(bytesForName + 4 + 4 * payload.length);
 		if (this.name != null) {
+			bb.put((byte) 0xB);
 			bb.putShort(length);
 			bb.put(name);
 		}

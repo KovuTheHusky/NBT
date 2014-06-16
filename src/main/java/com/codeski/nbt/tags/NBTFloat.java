@@ -28,11 +28,11 @@ public class NBTFloat extends NBT {
 		if (this.name != null) {
 			name = this.name.getBytes(Charset.forName("UTF-8"));
 			length = (short) name.length;
-			bytesForName = 2 + length;
+			bytesForName = 1 + 2 + length;
 		}
-		ByteBuffer bb = ByteBuffer.allocate(1 + bytesForName + 4);
-		bb.put((byte) 0x5);
+		ByteBuffer bb = ByteBuffer.allocate(bytesForName + 4);
 		if (this.name != null) {
+			bb.put((byte) 0x5);
 			bb.putShort(length);
 			bb.put(name);
 		}
