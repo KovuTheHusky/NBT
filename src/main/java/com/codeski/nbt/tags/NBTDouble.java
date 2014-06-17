@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 public class NBTDouble extends NBT {
 	public static final byte LENGTH = 8;
 	public static final byte TYPE = 6;
-	private Double payload;
+	private double payload;
 
 	public NBTDouble(String name, double payload) {
 		super(name);
@@ -31,16 +31,9 @@ public class NBTDouble extends NBT {
 		return TYPE;
 	}
 
-	public void setPayload(double payload) {
-		this.payload = payload;
-	}
-
 	@Override
-	public String toString() {
-		if (name != null)
-			return "[Double] " + name + ": " + payload;
-		else
-			return "[Double] null: " + payload;
+	public void setPayload(Object payload) {
+		this.payload = (Double) payload;
 	}
 
 	@Override

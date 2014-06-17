@@ -30,16 +30,9 @@ public class NBTString extends NBT {
 		return TYPE;
 	}
 
-	public void setPayload(String payload) {
-		this.payload = payload;
-	}
-
 	@Override
-	public String toString() {
-		if (name != null)
-			return "[String] " + name + ": " + payload;
-		else
-			return "[String] null: " + payload;
+	public void setPayload(Object payload) {
+		this.payload = (String) payload;
 	}
 
 	@Override

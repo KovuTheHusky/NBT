@@ -30,8 +30,9 @@ public class NBTIntegerArray extends NBT {
 		return TYPE;
 	}
 
-	public void setPayload(int[] payload) {
-		this.payload = payload;
+	@Override
+	public void setPayload(Object payload) {
+		this.payload = (int[]) payload;
 	}
 
 	@Override
@@ -50,9 +51,9 @@ public class NBTIntegerArray extends NBT {
 		for (int i : payload)
 			sb.append(i).append(' ');
 		if (name != null)
-			return "[Integer Array] " + name + ": " + sb.substring(0, sb.length() - 1);
+			return "[" + this.getClass().getSimpleName() + "] " + name + ": " + sb.substring(0, sb.length() - 1);
 		else
-			return "[Integer Array] null: " + sb.substring(0, sb.length() - 1);
+			return "[" + this.getClass().getSimpleName() + "] null: " + sb.substring(0, sb.length() - 1);
 	}
 
 	@Override

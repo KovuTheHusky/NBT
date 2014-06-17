@@ -27,8 +27,7 @@ public class NBTEnd extends NBT {
 	}
 
 	@Override
-	public String toString() {
-		return "[End]";
+	public void setPayload(Object payload) {
 	}
 
 	@Override

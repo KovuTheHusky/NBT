@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import com.codeski.nbt.Main;
+
 public class NBTCompound extends NBT implements List<NBT> {
 	public static final byte TYPE = 10;
 	private List<NBT> payload;
@@ -153,8 +155,9 @@ public class NBTCompound extends NBT implements List<NBT> {
 		return null;
 	}
 
-	public void setPayload(List<NBT> payload) {
-		this.payload = payload;
+	@Override
+	public void setPayload(Object payload) {
+		this.payload = (List<NBT>) payload;
 	}
 
 	@Override
@@ -194,9 +197,12 @@ public class NBTCompound extends NBT implements List<NBT> {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[Compound] " + name + ": " + this.size() + " entries\n");
+		sb.append("[" + this.getClass().getSimpleName() + "] Name:\"" + name + "\" " + this.size() + " entries\n");
+		Main.tabs += "  ";
 		for (NBT nbt : payload)
-			sb.append(nbt + "\n");
+			sb.append(Main.tabs + nbt + "\n");
+		Main.tabs = Main.tabs.substring(0, Main.tabs.length() - 2);
+		sb.append(Main.tabs + "[/" + this.getClass().getSimpleName() + "]\n");
 		return sb.substring(0, sb.length() - 1);
 	}
 

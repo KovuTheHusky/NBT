@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 public class NBTFloat extends NBT {
 	public static final byte LENGTH = 4;
 	public static final byte TYPE = 5;
-	private Float payload;
+	private float payload;
 
 	public NBTFloat(String name, float payload) {
 		super(name);
@@ -31,16 +31,9 @@ public class NBTFloat extends NBT {
 		return TYPE;
 	}
 
-	public void setPayload(float payload) {
-		this.payload = payload;
-	}
-
 	@Override
-	public String toString() {
-		if (name != null)
-			return "[Float] " + name + ": " + payload;
-		else
-			return "[Float] null: " + payload;
+	public void setPayload(Object payload) {
+		this.payload = (Float) payload;
 	}
 
 	@Override

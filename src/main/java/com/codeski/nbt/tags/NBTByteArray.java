@@ -30,8 +30,9 @@ public class NBTByteArray extends NBT {
 		return TYPE;
 	}
 
-	public void setPayload(byte[] payload) {
-		this.payload = payload;
+	@Override
+	public void setPayload(Object payload) {
+		this.payload = (byte[]) payload;
 	}
 
 	@Override
@@ -50,9 +51,9 @@ public class NBTByteArray extends NBT {
 		for (byte b : payload)
 			sb.append(b).append(' ');
 		if (name != null)
-			return "[Byte Array] " + name + ": " + sb.substring(0, sb.length() - 1);
+			return "[" + this.getClass().getSimpleName() + "] " + name + ": " + sb.substring(0, sb.length() - 1);
 		else
-			return "[Byte Array] null: " + sb.substring(0, sb.length() - 1);
+			return "[" + this.getClass().getSimpleName() + "] null: " + sb.substring(0, sb.length() - 1);
 	}
 
 	@Override

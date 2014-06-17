@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 public class NBTLong extends NBT {
 	public static final byte LENGTH = 8;
 	public static final byte TYPE = 4;
-	private Long payload;
+	private long payload;
 
 	public NBTLong(String name, long payload) {
 		super(name);
@@ -31,16 +31,9 @@ public class NBTLong extends NBT {
 		return TYPE;
 	}
 
-	public void setPayload(long payload) {
-		this.payload = payload;
-	}
-
 	@Override
-	public String toString() {
-		if (name != null)
-			return "[Long] " + name + ": " + payload;
-		else
-			return "[Long] null: " + payload;
+	public void setPayload(Object payload) {
+		this.payload = (Long) payload;
 	}
 
 	@Override

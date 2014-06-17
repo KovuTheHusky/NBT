@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 public class NBTShort extends NBT {
 	public static final byte LENGTH = 2;
 	public static final byte TYPE = 2;
-	private Short payload;
+	private short payload;
 
 	public NBTShort(String name, short payload) {
 		super(name);
@@ -31,16 +31,9 @@ public class NBTShort extends NBT {
 		return TYPE;
 	}
 
-	public void setPayload(short payload) {
-		this.payload = payload;
-	}
-
 	@Override
-	public String toString() {
-		if (name != null)
-			return "[Short] " + name + ": " + payload;
-		else
-			return "[Short] null: " + payload;
+	public void setPayload(Object payload) {
+		this.payload = (Short) payload;
 	}
 
 	@Override

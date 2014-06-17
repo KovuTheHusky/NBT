@@ -4,9 +4,6 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 public abstract class NBT {
-	public static final int END = 0, BYTE = 1, SHORT = 2, INTEGER = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, BYTE_ARRAY = 7, STRING = 8, LIST = 9, COMPOUND = 10, INTEGER_ARRAY = 11;
-	public static final int LENGTH = -1;
-	public static final byte TYPE = -1;
 	protected String name;
 
 	public NBT(String name) {
@@ -32,9 +29,7 @@ public abstract class NBT {
 		this.name = name;
 	}
 
-	public void setPayload(Object payload) {
-		// Make this abstract and implement in subclasses!
-	}
+	public abstract void setPayload(Object payload);
 
 	public String toJSON() {
 		if (this.getName() != null)
@@ -49,6 +44,14 @@ public abstract class NBT {
 			this.writeName(bytes);
 		this.writePayload(bytes);
 		return bytes.array();
+	}
+
+	@Override
+	public String toString() {
+		if (name != null)
+			return "[" + this.getClass().getSimpleName() + "] " + this.getName() + ": " + this.getPayload();
+		else
+			return "[" + this.getClass().getSimpleName() + "] null: " + this.getPayload();
 	}
 
 	public String toXML() {

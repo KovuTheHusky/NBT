@@ -3,6 +3,8 @@ package com.codeski.nbt.tags;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
+import com.codeski.nbt.Main;
+
 public class NBTList extends NBT {
 	public static final byte TYPE = 9;
 	private NBT[] payload;
@@ -32,8 +34,9 @@ public class NBTList extends NBT {
 		return TYPE;
 	}
 
-	public void setPayload(NBT[] payload) {
-		this.payload = payload;
+	@Override
+	public void setPayload(Object payload) {
+		this.payload = (NBT[]) payload;
 	}
 
 	@Override
@@ -49,12 +52,13 @@ public class NBTList extends NBT {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("[" + this.getClass().getSimpleName() + "] Name:\"" + name + "\" " + this.getPayload().length + " entries...\n");
+		Main.tabs += "  ";
 		for (NBT nbt : payload)
-			sb.append(nbt).append(' ');
-		if (name != null)
-			return "[List] " + name + ": " + sb.substring(0, sb.length() - 1).replace('\n', ' ');
-		else
-			return "[List] null: " + sb.substring(0, sb.length() - 1).replace('\n', ' ');
+			sb.append(Main.tabs + nbt + "\n");
+		Main.tabs = Main.tabs.substring(0, Main.tabs.length() - 2);
+		sb.append(Main.tabs + "[/" + this.getClass().getSimpleName() + "]\n");
+		return sb.substring(0, sb.length() - 1);
 	}
 
 	@Override
