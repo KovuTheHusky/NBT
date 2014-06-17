@@ -18,7 +18,6 @@ public class NBTLong extends NBT {
 		int length = LENGTH;
 		if (this.getName() != null)
 			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
-		// System.out.println(length + " of which " + LENGTH + " is payload.");
 		return length;
 	}
 
