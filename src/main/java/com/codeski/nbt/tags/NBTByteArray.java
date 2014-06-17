@@ -4,12 +4,20 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 public class NBTByteArray extends NBT {
+	public static final byte TYPE = 7;
 	private byte[] payload;
-	private final byte type = 7;
 
 	public NBTByteArray(String name, byte[] payload) {
 		super(name);
 		this.payload = payload;
+	}
+
+	@Override
+	public int getLength() {
+		int length = NBTInteger.LENGTH + this.getPayload().length;
+		if (this.getName() != null)
+			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
+		return length;
 	}
 
 	@Override
@@ -19,7 +27,7 @@ public class NBTByteArray extends NBT {
 
 	@Override
 	public byte getType() {
-		return type;
+		return TYPE;
 	}
 
 	public void setPayload(byte[] payload) {
@@ -34,27 +42,6 @@ public class NBTByteArray extends NBT {
 		str = str.substring(0, str.length() - 2);
 		str += " ]";
 		return str;
-	}
-
-	@Override
-	public byte[] toNBT() {
-		int bytesForName = 0;
-		byte[] name = null;
-		short length = 0;
-		if (this.name != null) {
-			name = this.name.getBytes(Charset.forName("UTF-8"));
-			length = (short) name.length;
-			bytesForName = 1 + 2 + length;
-		}
-		ByteBuffer bb = ByteBuffer.allocate(bytesForName + 4 + payload.length);
-		if (this.name != null) {
-			bb.put((byte) 0x7);
-			bb.putShort(length);
-			bb.put(name);
-		}
-		bb.putInt(payload.length);
-		bb.put(payload);
-		return bb.array();
 	}
 
 	@Override
@@ -75,5 +62,11 @@ public class NBTByteArray extends NBT {
 			str += "<NBTByte payload=\"" + e + "\" />";
 		str += "</" + this.getClass().getSimpleName() + ">";
 		return str;
+	}
+
+	@Override
+	public void writePayload(ByteBuffer bytes) {
+		bytes.putInt(this.getPayload().length);
+		bytes.put(this.getPayload());
 	}
 }

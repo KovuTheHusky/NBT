@@ -4,18 +4,20 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 public class NBTString extends NBT {
+	public static final byte TYPE = 8;
 	private String payload;
-	private final byte type = 8;
 
 	public NBTString(String name, String payload) {
 		super(name);
 		this.payload = payload;
 	}
 
-	public short getLength() {
-		if (payload.length() > Short.MAX_VALUE)
-			System.err.println("Payload length exceeds maximum value of short. " + this);
-		return (short) payload.length();
+	@Override
+	public int getLength() {
+		int length = NBTShort.LENGTH + this.getPayload().getBytes(Charset.forName("UTF-8")).length;
+		if (this.getName() != null)
+			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
+		return length;
 	}
 
 	@Override
@@ -25,34 +27,11 @@ public class NBTString extends NBT {
 
 	@Override
 	public byte getType() {
-		return type;
+		return TYPE;
 	}
 
 	public void setPayload(String payload) {
 		this.payload = payload;
-	}
-
-	@Override
-	public byte[] toNBT() {
-		int bytesForName = 0;
-		byte[] name = null;
-		short length = 0;
-		if (this.name != null) {
-			name = this.name.getBytes(Charset.forName("UTF-8"));
-			length = (short) name.length;
-			bytesForName = 1 + 2 + length;
-		}
-		byte[] value = payload.getBytes(Charset.forName("UTF-8"));
-		short lengthValue = (short) value.length;
-		ByteBuffer bb = ByteBuffer.allocate(bytesForName + 2 + lengthValue);
-		if (this.name != null) {
-			bb.put((byte) 0x8);
-			bb.putShort(length);
-			bb.put(name);
-		}
-		bb.putShort(lengthValue);
-		bb.put(value);
-		return bb.array();
 	}
 
 	@Override
@@ -61,5 +40,12 @@ public class NBTString extends NBT {
 			return "[String] " + name + ": " + payload;
 		else
 			return "[String] null: " + payload;
+	}
+
+	@Override
+	public void writePayload(ByteBuffer bytes) {
+		byte[] name = this.getPayload().getBytes(Charset.forName("UTF-8"));
+		bytes.putShort((short) name.length);
+		bytes.put(name);
 	}
 }

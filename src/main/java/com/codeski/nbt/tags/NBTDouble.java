@@ -4,12 +4,21 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 public class NBTDouble extends NBT {
+	public static final byte LENGTH = 8;
+	public static final byte TYPE = 6;
 	private Double payload;
-	private final byte type = 6;
 
 	public NBTDouble(String name, double payload) {
 		super(name);
 		this.payload = payload;
+	}
+
+	@Override
+	public int getLength() {
+		int length = LENGTH;
+		if (this.getName() != null)
+			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
+		return length;
 	}
 
 	@Override
@@ -19,31 +28,11 @@ public class NBTDouble extends NBT {
 
 	@Override
 	public byte getType() {
-		return type;
+		return TYPE;
 	}
 
 	public void setPayload(double payload) {
 		this.payload = payload;
-	}
-
-	@Override
-	public byte[] toNBT() {
-		int bytesForName = 0;
-		byte[] name = null;
-		short length = 0;
-		if (this.name != null) {
-			name = this.name.getBytes(Charset.forName("UTF-8"));
-			length = (short) name.length;
-			bytesForName = 1 + 2 + length;
-		}
-		ByteBuffer bb = ByteBuffer.allocate(bytesForName + 8);
-		if (this.name != null) {
-			bb.put((byte) 0x6);
-			bb.putShort(length);
-			bb.put(name);
-		}
-		bb.putDouble(payload);
-		return bb.array();
 	}
 
 	@Override
@@ -52,5 +41,10 @@ public class NBTDouble extends NBT {
 			return "[Double] " + name + ": " + payload;
 		else
 			return "[Double] null: " + payload;
+	}
+
+	@Override
+	public void writePayload(ByteBuffer bytes) {
+		bytes.putDouble(this.getPayload());
 	}
 }

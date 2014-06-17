@@ -2,15 +2,14 @@ package com.codeski.nbt.tags;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
 public class NBTCompound extends NBT implements List<NBT> {
+	public static final byte TYPE = 10;
 	private List<NBT> payload;
-	private final byte type = 10;
 
 	public NBTCompound(String name, List<NBT> payload) {
 		super(name);
@@ -74,13 +73,23 @@ public class NBTCompound extends NBT implements List<NBT> {
 	}
 
 	@Override
+	public int getLength() {
+		int length = 1;
+		if (this.getName() != null)
+			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
+		for (NBT e : this.getPayload())
+			length += e.getLength();
+		return length;
+	}
+
+	@Override
 	public List<NBT> getPayload() {
 		return payload;
 	}
 
 	@Override
 	public byte getType() {
-		return type;
+		return TYPE;
 	}
 
 	@Override
@@ -183,39 +192,6 @@ public class NBTCompound extends NBT implements List<NBT> {
 	}
 
 	@Override
-	public byte[] toNBT() {
-		int bytesForName = 0;
-		byte[] name = null;
-		short length = 0;
-		if (this.name != null) {
-			name = this.name.getBytes(Charset.forName("UTF-8"));
-			length = (short) name.length;
-			bytesForName = 1 + 2 + length;
-		}
-		ByteBuffer bb = ByteBuffer.allocate(bytesForName);
-		if (this.name != null) {
-			bb.put((byte) 0xA);
-			bb.putShort(length);
-			bb.put(name);
-		}
-		List<byte[]> bal = new ArrayList<byte[]>();
-		int bytecount = 0;
-		for (NBT e : payload) {
-			byte[] eba = e.toNBT();
-			bal.add(eba);
-			bytecount += eba.length;
-		}
-		ByteBuffer combo = ByteBuffer.allocate(bytecount + 1);
-		for (byte[] append : bal)
-			combo.put(append);
-		combo.put((byte) 0x0);
-		byte[] fin = new byte[bb.array().length + combo.array().length];
-		System.arraycopy(bb.array(), 0, fin, 0, bb.array().length);
-		System.arraycopy(combo.array(), 0, fin, bb.array().length, combo.array().length);
-		return fin;
-	}
-
-	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[Compound] " + name + ": " + this.size() + " entries\n");
@@ -235,5 +211,12 @@ public class NBTCompound extends NBT implements List<NBT> {
 			str += e.toXML();
 		str += "</" + this.getClass().getSimpleName() + ">";
 		return str;
+	}
+
+	@Override
+	public void writePayload(ByteBuffer bytes) {
+		for (NBT e : this.getPayload())
+			bytes.put(e.toNBT());
+		new NBTEnd().writePayload(bytes);
 	}
 }
