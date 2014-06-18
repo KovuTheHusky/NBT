@@ -9,10 +9,12 @@ import java.util.ListIterator;
 
 public class NBTList extends NBT implements List<NBT> {
 	public static final byte TYPE = 9;
+	private final byte listType;
 	private List<NBT> payload;
 
-	public NBTList(String name, List<NBT> payload) {
+	public NBTList(String name, byte type, List<NBT> payload) {
 		super(name);
+		listType = type;
 		this.payload = payload;
 	}
 
@@ -52,6 +54,14 @@ public class NBTList extends NBT implements List<NBT> {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		for (int i = 0; i < this.size(); ++i)
+			if (!this.get(i).equals(((NBTList) obj).get(i)))
+				return false;
+		return this.getName() == null && ((NBT) obj).getName() == null || this.getName().equals(((NBT) obj).getName());
+	}
+
+	@Override
 	public NBT get(int index) {
 		return this.getPayload().get(index);
 	}
@@ -64,6 +74,10 @@ public class NBTList extends NBT implements List<NBT> {
 		for (NBT e : this.getPayload())
 			length += e.getLength();
 		return length;
+	}
+
+	public byte getListType() {
+		return listType;
 	}
 
 	@Override
@@ -185,7 +199,7 @@ public class NBTList extends NBT implements List<NBT> {
 
 	@Override
 	public void writePayload(ByteBuffer bytes) {
-		bytes.put(this.getPayload().get(0).getType());
+		bytes.put(this.getListType());
 		bytes.putInt(this.getPayload().size());
 		for (NBT e : this.getPayload())
 			bytes.put(e.toNBT());

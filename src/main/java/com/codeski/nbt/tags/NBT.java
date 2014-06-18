@@ -12,7 +12,7 @@ public abstract class NBT {
 
 	@Override
 	public boolean equals(Object obj) {
-		return this.getName().equals(((NBT) obj).getName()) && this.getPayload().equals(((NBT) obj).getPayload());
+		return this.getName() == null && ((NBT) obj).getName() == null || this.getName().equals(((NBT) obj).getName()) && this.getPayload().equals(((NBT) obj).getPayload());
 	}
 
 	public abstract int getLength();

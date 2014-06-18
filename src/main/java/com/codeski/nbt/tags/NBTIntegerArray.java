@@ -52,6 +52,14 @@ public class NBTIntegerArray extends NBT implements List<Integer> {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		for (int i = 0; i < this.size(); ++i)
+			if (!this.get(i).equals(((NBTIntegerArray) obj).get(i)))
+				return false;
+		return this.getName() == null && ((NBT) obj).getName() == null || this.getName().equals(((NBT) obj).getName());
+	}
+
+	@Override
 	public Integer get(int index) {
 		return this.getPayload().get(index);
 	}

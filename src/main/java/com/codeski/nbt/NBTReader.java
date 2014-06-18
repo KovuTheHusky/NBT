@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,10 @@ public class NBTReader {
 
 	public NBTReader(File file) throws FileNotFoundException {
 		try {
-			in = new DataInputStream(new GZIPInputStream(new FileInputStream(file)));
+			if (this.isCompressed(file))
+				in = new DataInputStream(new GZIPInputStream(new FileInputStream(file)));
+			else
+				in = new DataInputStream(new FileInputStream(file));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -38,6 +42,18 @@ public class NBTReader {
 
 	public NBTCompound read() throws IOException {
 		return (NBTCompound) this.readTag();
+	}
+
+	private boolean isCompressed(File f) {
+		int magic = 0;
+		try {
+			RandomAccessFile raf = new RandomAccessFile(f, "r");
+			magic = raf.read() & 0xff | raf.read() << 8 & 0xff00;
+			raf.close();
+		} catch (Throwable e) {
+			e.printStackTrace(System.err);
+		}
+		return magic == GZIPInputStream.GZIP_MAGIC;
 	}
 
 	private NBT readPayload(final byte type) throws IOException {
@@ -71,7 +87,7 @@ public class NBTReader {
 				List<NBT> list = new ArrayList<NBT>();
 				for (int i = 0; i < listLength; ++i)
 					list.add(this.readPayload(listType));
-				return new NBTList(null, list);
+				return new NBTList(null, listType, list);
 			case COMPOUND:
 				NBT tag;
 				List<NBT> tags = new ArrayList<NBT>();
@@ -129,7 +145,7 @@ public class NBTReader {
 					List<NBT> list = new ArrayList<NBT>();
 					for (int i = 0; i < listLength; ++i)
 						list.add(this.readPayload(listType));
-					return new NBTList(name, list);
+					return new NBTList(name, listType, list);
 				case COMPOUND:
 					NBT tag;
 					List<NBT> tags = new ArrayList<NBT>();
@@ -141,7 +157,7 @@ public class NBTReader {
 					List<Integer> integerArrayIntegers = new ArrayList<Integer>();
 					for (int i = 0; i < integerArrayLength; i++)
 						integerArrayIntegers.add(in.readInt());
-					return new NBTIntegerArray(null, integerArrayIntegers);
+					return new NBTIntegerArray(name, integerArrayIntegers);
 				default:
 					System.err.println("Unsupported type: " + type);
 			}

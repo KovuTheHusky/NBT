@@ -52,6 +52,14 @@ public class NBTByteArray extends NBT implements List<Byte> {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		for (int i = 0; i < this.size(); ++i)
+			if (!this.get(i).equals(((NBTByteArray) obj).get(i)))
+				return false;
+		return this.getName() == null && ((NBT) obj).getName() == null || this.getName().equals(((NBT) obj).getName());
+	}
+
+	@Override
 	public Byte get(int index) {
 		return this.getPayload().get(index);
 	}
