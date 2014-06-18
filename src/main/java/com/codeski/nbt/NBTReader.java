@@ -56,8 +56,9 @@ public class NBTReader {
 				return new NBTDouble(null, in.readDouble());
 			case BYTE_ARRAY:
 				int byteArrayLength = in.readInt();
-				byte[] byteArrayBytes = new byte[byteArrayLength];
-				in.readFully(byteArrayBytes);
+				List<Byte> byteArrayBytes = new ArrayList<Byte>();
+				for (int i = 0; i < byteArrayLength; i++)
+					byteArrayBytes.add(in.readByte());
 				return new NBTByteArray(null, byteArrayBytes);
 			case STRING:
 				short stringLength = in.readShort();
@@ -79,9 +80,9 @@ public class NBTReader {
 				return new NBTCompound(null, tags);
 			case INTEGER_ARRAY:
 				int integerArrayLength = in.readInt();
-				int[] integerArrayIntegers = new int[integerArrayLength];
+				List<Integer> integerArrayIntegers = new ArrayList<Integer>();
 				for (int i = 0; i < integerArrayLength; i++)
-					integerArrayIntegers[i] = in.readInt();
+					integerArrayIntegers.add(in.readInt());
 				return new NBTIntegerArray(null, integerArrayIntegers);
 			default:
 				System.err.println("Unsupported type: " + type);
@@ -113,9 +114,10 @@ public class NBTReader {
 					return new NBTDouble(name, in.readDouble());
 				case BYTE_ARRAY:
 					int byteArrayLength = in.readInt();
-					byte[] byteArrayBytes = new byte[byteArrayLength];
-					in.readFully(byteArrayBytes);
-					return new NBTByteArray(name, byteArrayBytes);
+					List<Byte> byteArrayBytes = new ArrayList<Byte>();
+					for (int i = 0; i < byteArrayLength; i++)
+						byteArrayBytes.add(in.readByte());
+					return new NBTByteArray(null, byteArrayBytes);
 				case STRING:
 					short stringLength = in.readShort();
 					byte[] stringBytes = new byte[stringLength];
@@ -136,10 +138,10 @@ public class NBTReader {
 					return new NBTCompound(name, tags);
 				case INTEGER_ARRAY:
 					int integerArrayLength = in.readInt();
-					int[] integerArrayIntegers = new int[integerArrayLength];
+					List<Integer> integerArrayIntegers = new ArrayList<Integer>();
 					for (int i = 0; i < integerArrayLength; i++)
-						integerArrayIntegers[i] = in.readInt();
-					return new NBTIntegerArray(name, integerArrayIntegers);
+						integerArrayIntegers.add(in.readInt());
+					return new NBTIntegerArray(null, integerArrayIntegers);
 				default:
 					System.err.println("Unsupported type: " + type);
 			}
