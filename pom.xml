@@ -4,13 +4,13 @@
   <artifactId>nbt</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>nbt</name>
+  <name>NBT</name>
   <url>http://codeski.com/#nbt</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <build>
-    <finalName>nbt-${project.version}</finalName>
+    <finalName>${project.name}-${project.version}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -39,7 +39,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.9.1</version>
         <configuration>
-          <reportOutputDirectory>/Volumes/Storage/Sites/jd.codeski.com/nbt/</reportOutputDirectory>
+          <reportOutputDirectory>/Volumes/Storage/Sites/jd.codeski.com/${project.name}/${project.version}/</reportOutputDirectory>
         </configuration>
       </plugin>
     </plugins>
