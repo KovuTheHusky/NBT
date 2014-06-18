@@ -66,7 +66,7 @@ public abstract class NBT {
 	public abstract void setPayload(Object payload);
 
 	/**
-	 * Returns a <code>String</code> object representing this tag's value in <abbr title="JavaScript Object Notation">JSON</abbr>.
+	 * Returns a <code>String</code> object representing this tag's value as JSON.
 	 */
 	public String toJSON() {
 		if (this.getName() != null)
@@ -76,7 +76,7 @@ public abstract class NBT {
 	}
 
 	/**
-	 * Returns a <code>Byte[]</code> representing this tag's value in NBT.
+	 * Returns a <code>Byte[]</code> representing this tag's value as NBT.
 	 */
 	public byte[] toNBT() {
 		ByteBuffer bytes = ByteBuffer.allocate(this.getLength());
@@ -100,7 +100,7 @@ public abstract class NBT {
 	}
 
 	/**
-	 * Returns a <code>String</code> object representing this tag's value in <abbr title="Extensible Markup Language">XML</abbr>.
+	 * Returns a <code>String</code> object representing this tag's value as XML.
 	 */
 	public String toXML() {
 		if (this.getName() != null)

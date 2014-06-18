@@ -18,7 +18,7 @@ public class NBTWriter {
 	}
 
 	/**
-	 * Writes the tag specified and its children as <abbr title="JavaScript Object Notation">JSON</abbr> text.
+	 * Writes the tag specified and its children as JSON text.
 	 * 
 	 * @throws IOException
 	 */
@@ -29,7 +29,7 @@ public class NBTWriter {
 	}
 
 	/**
-	 * Writes the tag specified and its children as NBT.
+	 * Writes the tag specified and its children as NBT binary data.
 	 * 
 	 * @throws IOException
 	 */
@@ -40,7 +40,7 @@ public class NBTWriter {
 	}
 
 	/**
-	 * Writes the tag specified and its children as <abbr title="Extensible Markup Language">XML</abbr> text.
+	 * Writes the tag specified and its children as XML text.
 	 * 
 	 * @throws IOException
 	 */
