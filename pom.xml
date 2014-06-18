@@ -39,7 +39,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.9.1</version>
         <configuration>
-          <reportOutputDirectory>/Volumes/Storage/Sites/jd.codeski.com/{project.name}/{project.version}/</reportOutputDirectory>
+          <reportOutputDirectory>/Volumes/Storage/Sites/jd.codeski.com/${project.name}/${project.version}/</reportOutputDirectory>
           <show>public</show>
         </configuration>
       </plugin>
