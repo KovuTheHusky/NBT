@@ -67,9 +67,9 @@ public class NBTReader {
 			case LIST:
 				byte listType = in.readByte();
 				int listLength = in.readInt();
-				NBT[] list = new NBT[listLength];
+				List<NBT> list = new ArrayList<NBT>();
 				for (int i = 0; i < listLength; ++i)
-					list[i] = this.readPayload(listType);
+					list.add(this.readPayload(listType));
 				return new NBTList(null, list);
 			case COMPOUND:
 				NBT tag;
@@ -124,9 +124,9 @@ public class NBTReader {
 				case LIST:
 					byte listType = in.readByte();
 					int listLength = in.readInt();
-					NBT[] list = new NBT[listLength];
+					List<NBT> list = new ArrayList<NBT>();
 					for (int i = 0; i < listLength; ++i)
-						list[i] = this.readPayload(listType);
+						list.add(this.readPayload(listType));
 					return new NBTList(name, list);
 				case COMPOUND:
 					NBT tag;
