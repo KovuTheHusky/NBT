@@ -48,10 +48,10 @@ public abstract class NBT {
 
 	@Override
 	public String toString() {
-		if (name != null)
-			return "[" + this.getClass().getSimpleName() + "] " + this.getName() + ": " + this.getPayload();
+		if (this.getName() != null)
+			return this.getClass().getSimpleName() + " Name:\"" + this.getName() + "\" Payload:" + this.getPayload();
 		else
-			return "[" + this.getClass().getSimpleName() + "] null: " + this.getPayload();
+			return this.getClass().getSimpleName() + " Payload:" + this.getPayload();
 	}
 
 	public String toXML() {

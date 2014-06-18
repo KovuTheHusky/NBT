@@ -178,7 +178,10 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + " Name:" + this.getName() + " " + this.getPayload().size() + " entries";
+		if (this.getName() != null)
+			return this.getClass().getSimpleName() + " Name:\"" + this.getName() + "\" " + this.getPayload().size() + " entries";
+		else
+			return this.getClass().getSimpleName() + " " + this.getPayload().size() + " entries";
 	}
 
 	@Override

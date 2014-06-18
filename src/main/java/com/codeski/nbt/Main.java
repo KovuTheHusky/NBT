@@ -10,12 +10,18 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.codeski.nbt.tags.NBT;
 import com.codeski.nbt.tags.NBTCompound;
+import com.codeski.nbt.tags.NBTList;
 
 public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
+		NBTCompound test = new NBTReader(new File("Stronghold.dat")).read();
+		for (NBT e : ((NBTList) ((NBTCompound) ((NBTCompound) ((NBTCompound) test.get("data")).get("Features")).get("[-56,1]")).get("Children")).getPayload())
+			System.out.println(e);
+		System.exit(0);
 		Console console = System.console();
 		if (console != null)
 			if (args.length == 2) {

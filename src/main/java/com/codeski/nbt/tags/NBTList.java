@@ -49,7 +49,10 @@ public class NBTList extends NBT {
 
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + " Name:" + this.getName() + " " + this.getPayload().length + " entries";
+		if (this.getName() != null)
+			return this.getClass().getSimpleName() + " Name:\"" + this.getName() + "\" " + this.getPayload().length + " entries";
+		else
+			return this.getClass().getSimpleName() + " " + this.getPayload().length + " entries";
 	}
 
 	@Override

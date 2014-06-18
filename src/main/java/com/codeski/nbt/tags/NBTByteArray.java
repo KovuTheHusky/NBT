@@ -48,12 +48,12 @@ public class NBTByteArray extends NBT {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (byte b : payload)
-			sb.append(b).append(' ');
-		if (name != null)
-			return "[" + this.getClass().getSimpleName() + "] " + name + ": " + sb.substring(0, sb.length() - 1);
+		for (byte b : this.getPayload())
+			sb.append(',').append(b);
+		if (this.getName() != null)
+			return this.getClass().getSimpleName() + " Name:\"" + this.getName() + "\" Payload:" + sb.substring(1);
 		else
-			return "[" + this.getClass().getSimpleName() + "] null: " + sb.substring(0, sb.length() - 1);
+			return this.getClass().getSimpleName() + " Payload:" + sb.substring(1);
 	}
 
 	@Override

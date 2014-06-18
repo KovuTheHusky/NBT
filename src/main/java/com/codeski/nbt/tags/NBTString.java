@@ -36,6 +36,14 @@ public class NBTString extends NBT {
 	}
 
 	@Override
+	public String toString() {
+		if (this.getName() != null)
+			return this.getClass().getSimpleName() + " Name:\"" + this.getName() + "\" Payload:\"" + this.getPayload() + "\"";
+		else
+			return this.getClass().getSimpleName() + " Payload:\"" + this.getPayload() + "\"";
+	}
+
+	@Override
 	public void writePayload(ByteBuffer bytes) {
 		byte[] name = this.getPayload().getBytes(Charset.forName("UTF-8"));
 		bytes.putShort((short) name.length);

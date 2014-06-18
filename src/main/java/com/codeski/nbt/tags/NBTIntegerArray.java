@@ -48,12 +48,12 @@ public class NBTIntegerArray extends NBT {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (int i : payload)
-			sb.append(i).append(' ');
-		if (name != null)
-			return "[" + this.getClass().getSimpleName() + "] " + name + ": " + sb.substring(0, sb.length() - 1);
+		for (int i : this.getPayload())
+			sb.append(',').append(i);
+		if (this.getName() != null)
+			return this.getClass().getSimpleName() + " Name:\"" + this.getName() + "\" Payload:" + sb.substring(1);
 		else
-			return "[" + this.getClass().getSimpleName() + "] null: " + sb.substring(0, sb.length() - 1);
+			return this.getClass().getSimpleName() + " Payload:" + sb.substring(1);
 	}
 
 	@Override
