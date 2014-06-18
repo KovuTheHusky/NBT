@@ -22,7 +22,7 @@ public class Main
 				// Read in a user specified file...
 				File in = new File(args[0]);
 				System.out.println("Reading " + in.getCanonicalPath() + "...");
-				NBTCompound root = new NBTReader(in).read();
+				NBTCompound root = new NBTReader(in).readNBT();
 				// Write the file to NBT, JSON, or XML...
 				File out = new File(args[1]);
 				String extension = args[1].substring(args[1].lastIndexOf('.') + 1);
@@ -47,7 +47,7 @@ public class Main
 			int ret = fc.showOpenDialog(null);
 			if (ret == JFileChooser.APPROVE_OPTION) {
 				File in = fc.getSelectedFile();
-				NBTCompound root = new NBTReader(in).read();
+				NBTCompound root = new NBTReader(in).readNBT();
 				FileFilter json = new FileNameExtensionFilter("JavaScript Object Notation (.json)", "json");
 				fc.addChoosableFileFilter(json);
 				FileFilter xml = new FileNameExtensionFilter("Extensible Markup Language (.xml)", "xml");

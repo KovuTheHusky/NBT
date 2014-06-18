@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * A list of tag payloads, without repeated tag types or any tag names.
+ */
 public class NBTList extends NBT implements List<NBT> {
 	public static final byte TYPE = 9;
 	private final byte listType;
@@ -68,7 +71,7 @@ public class NBTList extends NBT implements List<NBT> {
 
 	@Override
 	public int getLength() {
-		int length = NBTByte.LENGTH + NBTInteger.LENGTH;
+		int length = new NBTByte(null, (byte) 0).getLength() + new NBTInteger(null, 0).getLength(); // Make static getLength() and possibly rename instanced to getSize().
 		if (this.getName() != null)
 			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
 		for (NBT e : this.getPayload())
@@ -198,7 +201,7 @@ public class NBTList extends NBT implements List<NBT> {
 	}
 
 	@Override
-	public void writePayload(ByteBuffer bytes) {
+	protected void writePayload(ByteBuffer bytes) {
 		bytes.put(this.getListType());
 		bytes.putInt(this.getPayload().size());
 		for (NBT e : this.getPayload())

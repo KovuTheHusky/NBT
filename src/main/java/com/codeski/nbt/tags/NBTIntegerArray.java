@@ -7,8 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * An array of integers with a maximum of ~2,147,483,647 elements.
+ */
 public class NBTIntegerArray extends NBT implements List<Integer> {
-	public static final byte TYPE = 11;
 	private List<Integer> payload;
 
 	public NBTIntegerArray(String name, List<Integer> payload) {
@@ -66,7 +68,7 @@ public class NBTIntegerArray extends NBT implements List<Integer> {
 
 	@Override
 	public int getLength() {
-		int length = NBTInteger.LENGTH + this.getPayload().size() * NBTInteger.LENGTH;
+		int length = new NBTInteger(null, 0).getLength() + this.getPayload().size() * new NBTInteger(null, 0).getLength(); // Make static getLength() and possibly rename instanced to getSize().
 		if (this.getName() != null)
 			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
 		return length;
@@ -79,7 +81,7 @@ public class NBTIntegerArray extends NBT implements List<Integer> {
 
 	@Override
 	public byte getType() {
-		return TYPE;
+		return NBT.INTEGER_ARRAY;
 	}
 
 	@Override
@@ -193,7 +195,7 @@ public class NBTIntegerArray extends NBT implements List<Integer> {
 	}
 
 	@Override
-	public void writePayload(ByteBuffer bytes) {
+	protected void writePayload(ByteBuffer bytes) {
 		bytes.putInt(this.getPayload().size());
 		for (int i : this.getPayload())
 			bytes.putInt(i);

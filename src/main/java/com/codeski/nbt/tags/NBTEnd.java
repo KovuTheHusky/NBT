@@ -2,28 +2,27 @@ package com.codeski.nbt.tags;
 
 import java.nio.ByteBuffer;
 
+/**
+ * Used to mark the end of compound tags. This tag does not have a name, so it is only ever a single byte 0.
+ */
 public class NBTEnd extends NBT {
-	public static final byte LENGTH = 1;
-	public static final byte TYPE = 0;
-	private final byte payload = 0;
-
 	public NBTEnd() {
 		super(null);
 	}
 
 	@Override
 	public int getLength() {
-		return LENGTH;
+		return 1;
 	}
 
 	@Override
 	public Byte getPayload() {
-		return payload;
+		return 0;
 	}
 
 	@Override
 	public byte getType() {
-		return TYPE;
+		return NBT.END;
 	}
 
 	@Override
@@ -31,7 +30,7 @@ public class NBTEnd extends NBT {
 	}
 
 	@Override
-	public void writePayload(ByteBuffer bytes) {
+	protected void writePayload(ByteBuffer bytes) {
 		bytes.put(this.getPayload());
 	}
 }

@@ -3,9 +3,10 @@ package com.codeski.nbt.tags;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
+/**
+ * A signed integral type that is 1 byte in length. Sometimes used for booleans.
+ */
 public class NBTByte extends NBT {
-	public static final int LENGTH = 1;
-	public static final byte TYPE = 1;
 	private byte payload;
 
 	public NBTByte(String name, byte payload) {
@@ -15,7 +16,7 @@ public class NBTByte extends NBT {
 
 	@Override
 	public int getLength() {
-		int length = LENGTH;
+		int length = 1;
 		if (this.getName() != null)
 			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
 		return length;
@@ -28,7 +29,7 @@ public class NBTByte extends NBT {
 
 	@Override
 	public byte getType() {
-		return TYPE;
+		return NBT.BYTE;
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class NBTByte extends NBT {
 	}
 
 	@Override
-	public void writePayload(ByteBuffer bytes) {
+	protected void writePayload(ByteBuffer bytes) {
 		bytes.put(this.getPayload());
 	}
 }

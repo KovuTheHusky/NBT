@@ -7,8 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * An array of bytes with a maximum of ~2,147,483,647 elements.
+ */
 public class NBTByteArray extends NBT implements List<Byte> {
-	public static final byte TYPE = 7;
 	private List<Byte> payload;
 
 	public NBTByteArray(String name, List<Byte> payload) {
@@ -66,7 +68,7 @@ public class NBTByteArray extends NBT implements List<Byte> {
 
 	@Override
 	public int getLength() {
-		int length = NBTInteger.LENGTH + this.getPayload().size();
+		int length = new NBTInteger(null, 0).getLength() + this.getPayload().size(); // Make static getLength() and possibly rename instanced to getSize().
 		if (this.getName() != null)
 			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
 		return length;
@@ -79,7 +81,7 @@ public class NBTByteArray extends NBT implements List<Byte> {
 
 	@Override
 	public byte getType() {
-		return TYPE;
+		return NBT.BYTE_ARRAY;
 	}
 
 	@Override
@@ -193,7 +195,7 @@ public class NBTByteArray extends NBT implements List<Byte> {
 	}
 
 	@Override
-	public void writePayload(ByteBuffer bytes) {
+	protected void writePayload(ByteBuffer bytes) {
 		bytes.putInt(this.getPayload().size());
 		for (byte b : this.getPayload())
 			bytes.put(b);

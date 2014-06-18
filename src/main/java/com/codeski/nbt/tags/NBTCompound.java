@@ -7,8 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * Fully formed tags, followed by an end tag.
+ */
 public class NBTCompound extends NBT implements List<NBT> {
-	public static final byte TYPE = 10;
 	private List<NBT> payload;
 
 	public NBTCompound(String name, List<NBT> payload) {
@@ -88,7 +90,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public byte getType() {
-		return TYPE;
+		return NBT.COMPOUND;
 	}
 
 	@Override
@@ -206,7 +208,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 	}
 
 	@Override
-	public void writePayload(ByteBuffer bytes) {
+	protected void writePayload(ByteBuffer bytes) {
 		for (NBT e : this.getPayload())
 			bytes.put(e.toNBT());
 		new NBTEnd().writePayload(bytes);

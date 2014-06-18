@@ -51,28 +51,28 @@ public class AppTest extends TestCase {
 
 	public void testEquals() throws FileNotFoundException, IOException {
 		for (File f : in) {
-			new NBTWriter(out).writeNBT(new NBTReader(f).read());
-			Assert.assertEquals(new NBTReader(f).read(), new NBTReader(out).read());
+			new NBTWriter(out).writeNBT(new NBTReader(f).readNBT());
+			Assert.assertEquals(new NBTReader(f).readNBT(), new NBTReader(out).readNBT());
 		}
 	}
 
 	public void testReadNBT() throws FileNotFoundException, IOException {
 		for (File f : in)
-			new NBTReader(f).read();
+			new NBTReader(f).readNBT();
 	}
 
 	public void testWriteJSON() throws FileNotFoundException, IOException {
 		for (File f : in)
-			new NBTWriter(out).writeJSON(new NBTReader(f).read());
+			new NBTWriter(out).writeJSON(new NBTReader(f).readNBT());
 	}
 
 	public void testWriteNBT() throws FileNotFoundException, IOException {
 		for (File f : in)
-			new NBTWriter(out).writeNBT(new NBTReader(f).read());
+			new NBTWriter(out).writeNBT(new NBTReader(f).readNBT());
 	}
 
 	public void testWriteXML() throws FileNotFoundException, IOException {
 		for (File f : in)
-			new NBTWriter(out).writeXML(new NBTReader(f).read());
+			new NBTWriter(out).writeXML(new NBTReader(f).readNBT());
 	}
 }

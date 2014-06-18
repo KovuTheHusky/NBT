@@ -17,24 +17,36 @@ public class NBTWriter {
 		this.file = file;
 	}
 
-	public boolean writeJSON(NBT root) throws IOException {
+	/**
+	 * Writes the tag specified and its children as <abbr title="JavaScript Object Notation">JSON</abbr> text.
+	 * 
+	 * @throws IOException
+	 */
+	public void writeJSON(NBT root) throws IOException {
 		PrintWriter out = new PrintWriter(file);
 		out.println("{ " + root.toJSON() + " }");
 		out.close();
-		return true;
 	}
 
-	public boolean writeNBT(NBT root) throws FileNotFoundException, IOException {
+	/**
+	 * Writes the tag specified and its children as NBT.
+	 * 
+	 * @throws IOException
+	 */
+	public void writeNBT(NBT root) throws IOException {
 		DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
 		out.write(root.toNBT());
 		out.close();
-		return true;
 	}
 
-	public boolean writeXML(NBT root) throws IOException {
+	/**
+	 * Writes the tag specified and its children as <abbr title="Extensible Markup Language">XML</abbr> text.
+	 * 
+	 * @throws IOException
+	 */
+	public void writeXML(NBT root) throws IOException {
 		PrintWriter out = new PrintWriter(file);
 		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + root.toXML());
 		out.close();
-		return true;
 	}
 }

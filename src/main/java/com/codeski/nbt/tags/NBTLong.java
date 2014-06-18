@@ -3,9 +3,10 @@ package com.codeski.nbt.tags;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
+/**
+ * A signed integral type that is 8 bytes in length.
+ */
 public class NBTLong extends NBT {
-	public static final byte LENGTH = 8;
-	public static final byte TYPE = 4;
 	private long payload;
 
 	public NBTLong(String name, long payload) {
@@ -15,7 +16,7 @@ public class NBTLong extends NBT {
 
 	@Override
 	public int getLength() {
-		int length = LENGTH;
+		int length = 8;
 		if (this.getName() != null)
 			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
 		return length;
@@ -28,7 +29,7 @@ public class NBTLong extends NBT {
 
 	@Override
 	public byte getType() {
-		return TYPE;
+		return NBT.LONG;
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class NBTLong extends NBT {
 	}
 
 	@Override
-	public void writePayload(ByteBuffer bytes) {
+	protected void writePayload(ByteBuffer bytes) {
 		bytes.putLong(this.getPayload());
 	}
 }

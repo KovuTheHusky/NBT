@@ -26,7 +26,6 @@ import com.codeski.nbt.tags.NBTShort;
 import com.codeski.nbt.tags.NBTString;
 
 public class NBTReader {
-	public static final int END = 0, BYTE = 1, SHORT = 2, INTEGER = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, BYTE_ARRAY = 7, STRING = 8, LIST = 9, COMPOUND = 10, INTEGER_ARRAY = 11;
 	private DataInputStream in;
 
 	public NBTReader(File file) throws FileNotFoundException {
@@ -40,7 +39,12 @@ public class NBTReader {
 		}
 	}
 
-	public NBTCompound read() throws IOException {
+	/**
+	 * Reads the file and returns the root compound tag and its children.
+	 * 
+	 * @throws IOException
+	 */
+	public NBTCompound readNBT() throws IOException {
 		return (NBTCompound) this.readTag();
 	}
 
@@ -58,43 +62,43 @@ public class NBTReader {
 
 	private NBT readPayload(final byte type) throws IOException {
 		switch (type) {
-			case BYTE:
+			case NBT.BYTE:
 				return new NBTByte(null, in.readByte());
-			case SHORT:
+			case NBT.SHORT:
 				return new NBTShort(null, in.readShort());
-			case INTEGER:
+			case NBT.INTEGER:
 				return new NBTInteger(null, in.readInt());
-			case LONG:
+			case NBT.LONG:
 				return new NBTLong(null, in.readLong());
-			case FLOAT:
+			case NBT.FLOAT:
 				return new NBTFloat(null, in.readFloat());
-			case DOUBLE:
+			case NBT.DOUBLE:
 				return new NBTDouble(null, in.readDouble());
-			case BYTE_ARRAY:
+			case NBT.BYTE_ARRAY:
 				int byteArrayLength = in.readInt();
 				List<Byte> byteArrayBytes = new ArrayList<Byte>();
 				for (int i = 0; i < byteArrayLength; i++)
 					byteArrayBytes.add(in.readByte());
 				return new NBTByteArray(null, byteArrayBytes);
-			case STRING:
+			case NBT.STRING:
 				short stringLength = in.readShort();
 				byte[] bytes = new byte[stringLength];
 				in.readFully(bytes);
 				return new NBTString(null, new String(bytes, Charset.forName("UTF-8")));
-			case LIST:
+			case NBT.LIST:
 				byte listType = in.readByte();
 				int listLength = in.readInt();
 				List<NBT> list = new ArrayList<NBT>();
 				for (int i = 0; i < listLength; ++i)
 					list.add(this.readPayload(listType));
 				return new NBTList(null, listType, list);
-			case COMPOUND:
+			case NBT.COMPOUND:
 				NBT tag;
 				List<NBT> tags = new ArrayList<NBT>();
 				while (!((tag = this.readTag()) instanceof NBTEnd))
 					tags.add(tag);
 				return new NBTCompound(null, tags);
-			case INTEGER_ARRAY:
+			case NBT.INTEGER_ARRAY:
 				int integerArrayLength = in.readInt();
 				List<Integer> integerArrayIntegers = new ArrayList<Integer>();
 				for (int i = 0; i < integerArrayLength; i++)
@@ -108,7 +112,7 @@ public class NBTReader {
 
 	private NBT readTag() throws IOException {
 		final byte type = in.readByte();
-		if (type == END)
+		if (type == NBT.END)
 			return new NBTEnd();
 		else {
 			short nameLength = in.readShort();
@@ -116,43 +120,43 @@ public class NBTReader {
 			in.readFully(bytes);
 			String name = new String(bytes, Charset.forName("UTF-8"));
 			switch (type) {
-				case BYTE:
+				case NBT.BYTE:
 					return new NBTByte(name, in.readByte());
-				case SHORT:
+				case NBT.SHORT:
 					return new NBTShort(name, in.readShort());
-				case INTEGER:
+				case NBT.INTEGER:
 					return new NBTInteger(name, in.readInt());
-				case LONG:
+				case NBT.LONG:
 					return new NBTLong(name, in.readLong());
-				case FLOAT:
+				case NBT.FLOAT:
 					return new NBTFloat(name, in.readFloat());
-				case DOUBLE:
+				case NBT.DOUBLE:
 					return new NBTDouble(name, in.readDouble());
-				case BYTE_ARRAY:
+				case NBT.BYTE_ARRAY:
 					int byteArrayLength = in.readInt();
 					List<Byte> byteArrayBytes = new ArrayList<Byte>();
 					for (int i = 0; i < byteArrayLength; i++)
 						byteArrayBytes.add(in.readByte());
 					return new NBTByteArray(null, byteArrayBytes);
-				case STRING:
+				case NBT.STRING:
 					short stringLength = in.readShort();
 					byte[] stringBytes = new byte[stringLength];
 					in.readFully(stringBytes);
 					return new NBTString(name, new String(stringBytes, Charset.forName("UTF-8")));
-				case LIST:
+				case NBT.LIST:
 					byte listType = in.readByte();
 					int listLength = in.readInt();
 					List<NBT> list = new ArrayList<NBT>();
 					for (int i = 0; i < listLength; ++i)
 						list.add(this.readPayload(listType));
 					return new NBTList(name, listType, list);
-				case COMPOUND:
+				case NBT.COMPOUND:
 					NBT tag;
 					List<NBT> tags = new ArrayList<NBT>();
 					while (!((tag = this.readTag()) instanceof NBTEnd))
 						tags.add(tag);
 					return new NBTCompound(name, tags);
-				case INTEGER_ARRAY:
+				case NBT.INTEGER_ARRAY:
 					int integerArrayLength = in.readInt();
 					List<Integer> integerArrayIntegers = new ArrayList<Integer>();
 					for (int i = 0; i < integerArrayLength; i++)
