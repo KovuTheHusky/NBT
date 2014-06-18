@@ -34,8 +34,10 @@ public class Main
 					nw.writeJSON(root);
 				else if (extension.equalsIgnoreCase("xml"))
 					nw.writeXML(root);
-				else
-					System.out.println("Cannot write file... Supported file extensions are dat, json, and xml.");
+				else {
+					System.out.println("File extension was not dat, json, or xml. Writing NBT by default.");
+					nw.writeNBT(root);
+				}
 			} else
 				System.out.println("Usage: java -jar " + new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName() + " <file-to-read> <file-to-write>");
 		else if (!GraphicsEnvironment.isHeadless()) {
