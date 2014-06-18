@@ -20,7 +20,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public void add(int index, NBT element) {
-		// TODO Auto-generated method stub
+		this.getPayload().add(index, element);
 	}
 
 	@Override
@@ -35,8 +35,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends NBT> c) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.getPayload().addAll(index, c);
 	}
 
 	@Override
@@ -49,13 +48,6 @@ public class NBTCompound extends NBT implements List<NBT> {
 		return this.getPayload().contains(o);
 	}
 
-	public boolean contains(String name) {
-		for (NBT e : this.getPayload())
-			if (e.getName().equals(name))
-				return true;
-		return false;
-	}
-
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		return this.getPayload().containsAll(c);
@@ -63,8 +55,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public NBT get(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getPayload().get(index);
 	}
 
 	public NBT get(String name) {
@@ -96,8 +87,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.getPayload().indexOf(o);
 	}
 
 	@Override
@@ -112,26 +102,22 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.getPayload().lastIndexOf(o);
 	}
 
 	@Override
 	public ListIterator<NBT> listIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getPayload().listIterator();
 	}
 
 	@Override
 	public ListIterator<NBT> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getPayload().listIterator(index);
 	}
 
 	@Override
 	public NBT remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getPayload().remove(index);
 	}
 
 	@Override
@@ -151,8 +137,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public NBT set(int index, NBT element) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getPayload().set(index, element);
 	}
 
 	@Override
@@ -167,8 +152,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	public List<NBT> subList(int fromIndex, int toIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getPayload().subList(fromIndex, toIndex);
 	}
 
 	@Override
