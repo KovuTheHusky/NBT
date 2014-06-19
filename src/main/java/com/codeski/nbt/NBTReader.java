@@ -25,6 +25,9 @@ import com.codeski.nbt.tags.NBTLong;
 import com.codeski.nbt.tags.NBTShort;
 import com.codeski.nbt.tags.NBTString;
 
+/**
+ * Class for reading NBT binary data from files.
+ */
 public class NBTReader {
 	private DataInputStream in;
 

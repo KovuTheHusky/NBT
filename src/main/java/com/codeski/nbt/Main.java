@@ -12,6 +12,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.codeski.nbt.tags.NBTCompound;
 
+/**
+ * Class allows for GUI and CLI interaction for converting files from NBT to NBT, JSON, or XML.
+ */
 public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException, IOException

@@ -10,6 +10,9 @@ import java.util.zip.GZIPOutputStream;
 
 import com.codeski.nbt.tags.NBT;
 
+/**
+ * Class for writing NBT structures as NBT, JSON, or XML.
+ */
 public class NBTWriter {
 	private final File file;
 
