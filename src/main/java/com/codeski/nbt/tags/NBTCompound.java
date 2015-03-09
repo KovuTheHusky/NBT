@@ -69,7 +69,11 @@ public class NBTCompound extends NBT implements List<NBT> {
 	public <T extends NBT> T get(String name) {
 		for (NBT e : this.getPayload())
 			if (e.getName().equals(name))
-				return (T) e;
+				try {
+					return (T) e;
+				} catch (ClassCastException ex) {
+					ex.printStackTrace();
+				}
 		return null;
 	}
 
