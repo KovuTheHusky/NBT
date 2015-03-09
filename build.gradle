@@ -7,6 +7,12 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.6'
 targetCompatibility = '1.6'
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.codeski.nbt.Main'
+    }
+}
+
 uploadArchives {
     repositories.mavenDeployer {
         repository(url: "file:///Volumes/Storage/Repository/")
