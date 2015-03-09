@@ -66,18 +66,10 @@ public class NBTCompound extends NBT implements List<NBT> {
 		return this.getPayload().get(index);
 	}
 
-	public NBT get(String name) {
+	public <T extends NBT> T get(String name) {
 		for (NBT e : this.getPayload())
 			if (e.getName().equals(name))
-				return e;
-		return null;
-	}
-
-	public NBTCompound getCompound(String name) {
-		for (NBT e : this.getPayload())
-			if (e.getName().equals(name))
-				if (e.getType() == COMPOUND)
-					return (NBTCompound) e;
+				return (T) e;
 		return null;
 	}
 
