@@ -3,7 +3,6 @@ package com.codeski.nbt;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
@@ -29,29 +28,26 @@ import com.codeski.nbt.tags.NBTString;
  * Class for reading NBT binary data from files.
  */
 public class NBTReader {
-	private DataInputStream in;
+	private static DataInputStream in;
 
-	public NBTReader(File file) throws FileNotFoundException {
+	/**
+	 * Reads the file and returns the root compound tag and its children.
+	 *
+	 * @throws IOException
+	 */
+	public static NBTCompound read(File file) throws IOException {
 		try {
-			if (this.isCompressed(file))
+			if (NBTReader.isCompressed(file))
 				in = new DataInputStream(new GZIPInputStream(new FileInputStream(file)));
 			else
 				in = new DataInputStream(new FileInputStream(file));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return (NBTCompound) NBTReader.readTag();
 	}
 
-	/**
-	 * Reads the file and returns the root compound tag and its children.
-	 * 
-	 * @throws IOException
-	 */
-	public NBTCompound readNBT() throws IOException {
-		return (NBTCompound) this.readTag();
-	}
-
-	private boolean isCompressed(File f) {
+	private static boolean isCompressed(File f) {
 		int magic = 0;
 		try {
 			RandomAccessFile raf = new RandomAccessFile(f, "r");
@@ -63,7 +59,7 @@ public class NBTReader {
 		return magic == GZIPInputStream.GZIP_MAGIC;
 	}
 
-	private NBT readPayload(final byte type) throws IOException {
+	private static NBT readPayload(final byte type) throws IOException {
 		switch (type) {
 			case NBT.BYTE:
 				return new NBTByte(null, in.readByte());
@@ -93,12 +89,12 @@ public class NBTReader {
 				int listLength = in.readInt();
 				List<NBT> list = new ArrayList<NBT>();
 				for (int i = 0; i < listLength; ++i)
-					list.add(this.readPayload(listType));
+					list.add(NBTReader.readPayload(listType));
 				return new NBTList(null, listType, list);
 			case NBT.COMPOUND:
 				NBT tag;
 				List<NBT> tags = new ArrayList<NBT>();
-				while (!((tag = this.readTag()) instanceof NBTEnd))
+				while (!((tag = NBTReader.readTag()) instanceof NBTEnd))
 					tags.add(tag);
 				return new NBTCompound(null, tags);
 			case NBT.INTEGER_ARRAY:
@@ -113,7 +109,7 @@ public class NBTReader {
 		return null;
 	}
 
-	private NBT readTag() throws IOException {
+	private static NBT readTag() throws IOException {
 		final byte type = in.readByte();
 		if (type == NBT.END)
 			return new NBTEnd();
@@ -151,12 +147,12 @@ public class NBTReader {
 					int listLength = in.readInt();
 					List<NBT> list = new ArrayList<NBT>();
 					for (int i = 0; i < listLength; ++i)
-						list.add(this.readPayload(listType));
+						list.add(NBTReader.readPayload(listType));
 					return new NBTList(name, listType, list);
 				case NBT.COMPOUND:
 					NBT tag;
 					List<NBT> tags = new ArrayList<NBT>();
-					while (!((tag = this.readTag()) instanceof NBTEnd))
+					while (!((tag = NBTReader.readTag()) instanceof NBTEnd))
 						tags.add(tag);
 					return new NBTCompound(name, tags);
 				case NBT.INTEGER_ARRAY:
