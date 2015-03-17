@@ -2,7 +2,7 @@ language: java
 deploy:
   provider: releases
   api_key:
-    secure: d4ehSZ2dgGAjBmwWeRX1HJNZOXdI9/fv1OR5mObQnHcrKj6efg53VAUfG0fFjp8+1HaxPp9NJO3ZbglhayiJN2RSuxBHYU/f6qqRqUAThLLG5Wt0OEqG8IHcxZhYHS3LHLQMo0dK5ihHwV3MoU1B9FdCq0Ci1yMLBvBAxBOOr4U=
+    secure: "d4ehSZ2dgGAjBmwWeRX1HJNZOXdI9/fv1OR5mObQnHcrKj6efg53VAUfG0fFjp8+1HaxPp9NJO3ZbglhayiJN2RSuxBHYU/f6qqRqUAThLLG5Wt0OEqG8IHcxZhYHS3LHLQMo0dK5ihHwV3MoU1B9FdCq0Ci1yMLBvBAxBOOr4U="
   file-glob: true
   file: "build/libs/NBT-*.jar"
   skip_cleanup: true
