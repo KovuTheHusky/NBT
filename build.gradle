@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 group = 'com.codeski'
-version = '0.0.1'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = '1.6'
 targetCompatibility = '1.6'
 
