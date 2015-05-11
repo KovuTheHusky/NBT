@@ -43,3 +43,8 @@ publishing {
     }
   }
 }
+
+task documentation(type: Javadoc) {
+  source = sourceSets.main.allJava
+  destinationDir = file('/Volumes/Storage/NBT/' + version + '/')
+}
