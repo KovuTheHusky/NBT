@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'maven-publish-auth'
 
 group = 'com.codeski'
-version = '0.1.1'
+version = '0.1.2-SNAPSHOT'
 sourceCompatibility = '1.6'
 targetCompatibility = '1.6'
 
