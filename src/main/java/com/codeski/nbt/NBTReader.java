@@ -36,23 +36,10 @@ public class NBTReader {
 		return (NBTCompound) new NBTReader(file).readTag();
 	}
 
-	private final File file;
 	private DataInputStream in;
 
 	private NBTReader(File file) {
-		this.file = file;
-		try {
-			if (this.isCompressed())
-				in = new DataInputStream(new GZIPInputStream(new FileInputStream(file)));
-			else
-				in = new DataInputStream(new FileInputStream(file));
-		} catch (IOException e) {
-			System.err.println("There was an error setting up the data input stream.");
-			e.printStackTrace(System.err);
-		}
-	}
-
-	private boolean isCompressed() {
+		// Detect whether or not this file is compressed
 		int magic = 0;
 		try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
 			magic = raf.read() & 0xff | raf.read() << 8 & 0xff00;
@@ -60,7 +47,16 @@ public class NBTReader {
 			System.err.println("There was an error detecting if the NBT file is compressed.");
 			e.printStackTrace(System.err);
 		}
-		return magic == GZIPInputStream.GZIP_MAGIC;
+		// Set up the data input stream for reading NBT data
+		try {
+			if (magic == GZIPInputStream.GZIP_MAGIC)
+				in = new DataInputStream(new GZIPInputStream(new FileInputStream(file)));
+			else
+				in = new DataInputStream(new FileInputStream(file));
+		} catch (IOException e) {
+			System.err.println("There was an error setting up the data input stream.");
+			e.printStackTrace(System.err);
+		}
 	}
 
 	private NBT<?> readPayload(final byte type, final String name) throws IOException {
