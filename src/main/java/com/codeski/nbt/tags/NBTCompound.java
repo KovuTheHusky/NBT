@@ -72,7 +72,7 @@ public class NBTCompound extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 				try {
 					return (T) e;
 				} catch (ClassCastException ex) {
-					ex.printStackTrace();
+					ex.printStackTrace(System.err);
 				}
 		return null;
 	}

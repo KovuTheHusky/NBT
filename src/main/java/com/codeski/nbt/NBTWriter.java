@@ -27,7 +27,7 @@ public class NBTWriter {
 		try (PrintWriter out = new PrintWriter(file)) {
 			out.println("{ " + root.toJSON() + " }");
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(System.err);
 		}
 	}
 
@@ -38,7 +38,7 @@ public class NBTWriter {
 		try (DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)))) {
 			out.write(root.toNBT());
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(System.err);
 		}
 	}
 
@@ -49,7 +49,7 @@ public class NBTWriter {
 		try (PrintWriter out = new PrintWriter(file)) {
 			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + root.toXML());
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(System.err);
 		}
 	}
 }

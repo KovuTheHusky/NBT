@@ -45,7 +45,7 @@ public class NBTReader {
 			else
 				in = new DataInputStream(new FileInputStream(file));
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(System.err);
 		}
 	}
 
