@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
@@ -86,7 +85,7 @@ public class NBTReader {
 				short stringLength = in.readShort();
 				byte[] stringBytes = new byte[stringLength];
 				in.readFully(stringBytes);
-				return new NBTString(name, new String(stringBytes, Charset.forName("UTF-8")));
+				return new NBTString(name, new String(stringBytes, NBT.CHARSET));
 			case NBT.LIST:
 				byte listType = in.readByte();
 				int listLength = in.readInt();
@@ -120,7 +119,7 @@ public class NBTReader {
 			short nameLength = in.readShort();
 			byte[] bytes = new byte[nameLength];
 			in.readFully(bytes);
-			String name = new String(bytes, Charset.forName("UTF-8"));
+			String name = new String(bytes, NBT.CHARSET);
 			return this.readPayload(type, name);
 		}
 	}

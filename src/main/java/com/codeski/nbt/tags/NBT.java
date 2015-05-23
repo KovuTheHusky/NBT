@@ -9,13 +9,13 @@ import java.nio.charset.Charset;
  */
 public abstract class NBT<T> {
 	/**
+	 * The charset to use for reading a String from an NBT file.
+	 */
+	public static final Charset CHARSET = Charset.forName("UTF-8");
+	/**
 	 * Constants representing the types defined by the NBT specification.
 	 */
 	public static final int END = 0, BYTE = 1, SHORT = 2, INTEGER = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, BYTE_ARRAY = 7, STRING = 8, LIST = 9, COMPOUND = 10, INTEGER_ARRAY = 11;
-	/**
-	 * The charset to use for reading a String from an NBT file.
-	 */
-	protected static final Charset CHARSET = Charset.forName("UTF-8");
 	/**
 	 * The name of this named binary tag.
 	 */
