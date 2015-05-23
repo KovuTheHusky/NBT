@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
  */
 public abstract class NBT<T> {
 	/**
-	 * The charset to use for reading a String from an NBT file.
+	 * The <code>Charset</code> to use for reading a <code>String</code> from an NBT file.
 	 */
 	public static final Charset CHARSET = Charset.forName("UTF-8");
 	/**
