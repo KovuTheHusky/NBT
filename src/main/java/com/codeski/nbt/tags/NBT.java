@@ -96,9 +96,7 @@ public abstract class NBT<T> {
 	 */
 	public byte[] toNBT() {
 		ByteBuffer bytes = ByteBuffer.allocate(this.getLength());
-		if (this.getName() != null)
-			this.writeName(bytes);
-		this.writePayload(bytes);
+		this.writeTag(bytes);
 		return bytes.array();
 	}
 
@@ -125,11 +123,14 @@ public abstract class NBT<T> {
 			return "<" + this.getClass().getSimpleName() + " payload=\"" + this.getPayload() + "\" />";
 	}
 
-	private void writeName(ByteBuffer bytes) {
-		bytes.put(this.getType());
-		byte[] name = this.getName().getBytes(NBT.CHARSET);
-		bytes.putShort((short) name.length);
-		bytes.put(name);
+	private void writeTag(ByteBuffer bytes) {
+		if (this.getName() != null) {
+			bytes.put(this.getType());
+			byte[] name = this.getName().getBytes(NBT.CHARSET);
+			bytes.putShort((short) name.length);
+			bytes.put(name);
+		}
+		this.writePayload(bytes);
 	}
 
 	protected abstract void writePayload(ByteBuffer bytes);
