@@ -37,10 +37,10 @@ public abstract class NBT<T> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof NBT))
+		if (!(obj instanceof NBT<?>))
 			return false;
-		NBT<?> nbt = (NBT<?>) obj;
-		return this.getName() == null && nbt.getName() == null || this.getName().equals(nbt.getName()) && this.getPayload().equals(nbt.getPayload());
+		NBT<?> that = (NBT<?>) obj;
+		return this.getName() == null && that.getName() == null || this.getName().equals(that.getName()) && this.getPayload().equals(that.getPayload());
 	}
 
 	/**

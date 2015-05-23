@@ -53,10 +53,11 @@ public class NBTIntegerArray extends NBT<List<Integer>> implements List<Integer>
 	public boolean equals(Object obj) {
 		if (!(obj instanceof NBTIntegerArray))
 			return false;
+		NBTIntegerArray that = (NBTIntegerArray) obj;
 		for (int i = 0; i < this.size(); ++i)
-			if (!this.get(i).equals(((NBTIntegerArray) obj).get(i)))
+			if (!this.get(i).equals(that.get(i)))
 				return false;
-		return this.getName() == null && ((NBT<?>) obj).getName() == null || this.getName().equals(((NBT<?>) obj).getName());
+		return this.getName() == null && that.getName() == null || this.getName().equals(that.getName());
 	}
 
 	@Override
