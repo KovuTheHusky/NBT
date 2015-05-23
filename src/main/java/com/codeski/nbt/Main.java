@@ -22,11 +22,11 @@ public class Main
 		Console console = System.console();
 		if (console != null)
 			if (args.length == 2) {
-				// Read in a user specified file...
+				// Read in a user specified file
 				File in = new File(args[0]);
 				System.out.println("Reading " + in.getCanonicalPath() + "...");
 				NBTCompound root = NBTReader.read(in);
-				// Write the file to NBT, JSON, or XML...
+				// Write the file to NBT, JSON, or XML
 				File out = new File(args[1]);
 				String extension = args[1].substring(args[1].lastIndexOf('.') + 1);
 				System.out.println("Writing " + out.getCanonicalPath() + "...");
@@ -47,6 +47,7 @@ public class Main
 			JFileChooser fc = new JFileChooser();
 			FileFilter nbt = new FileNameExtensionFilter("Named Binary Tag (.dat)", "dat");
 			fc.addChoosableFileFilter(nbt);
+			// Show an open file dialog
 			int ret = fc.showOpenDialog(null);
 			if (ret == JFileChooser.APPROVE_OPTION) {
 				File in = fc.getSelectedFile();
@@ -56,6 +57,7 @@ public class Main
 				FileFilter xml = new FileNameExtensionFilter("Extensible Markup Language (.xml)", "xml");
 				fc.addChoosableFileFilter(xml);
 				fc.setFileFilter(fc.getAcceptAllFileFilter());
+				// Show a save file dialog
 				ret = fc.showSaveDialog(null);
 				if (ret == JFileChooser.APPROVE_OPTION) {
 					File out = fc.getSelectedFile();
@@ -75,7 +77,7 @@ public class Main
 						else if (ext.equalsIgnoreCase("xml"))
 							nw.writeXML(root);
 						else
-							nw.writeNBT(root); // Default case...
+							nw.writeNBT(root); // Default case is to write NBT data
 					}
 				}
 			}
