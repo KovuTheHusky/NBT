@@ -27,19 +27,18 @@ import com.codeski.nbt.tags.NBTString;
  * Class for reading NBT binary data from files.
  */
 public class NBTReader {
-	private final File file;
-	private DataInputStream in;
-
-	public NBTReader(File file) {
-		this.file = file;
-	}
-
 	/**
 	 * Reads the file and returns the root compound tag and its children.
 	 *
 	 * @throws IOException
 	 */
-	public NBTCompound read() throws IOException {
+	public static NBTCompound read(File file) throws IOException {
+		return (NBTCompound) new NBTReader(file).readTag();
+	}
+
+	private DataInputStream in;
+
+	private NBTReader(File file) {
 		try {
 			if (this.isCompressed(file))
 				in = new DataInputStream(new GZIPInputStream(new FileInputStream(file)));
@@ -48,7 +47,6 @@ public class NBTReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return (NBTCompound) this.readTag();
 	}
 
 	private boolean isCompressed(File f) {
