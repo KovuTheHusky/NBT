@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
  * Base abstract class that all subclasses extend upon. More information can be found at the article for NBT format on Minecraft Wiki:<br>
  * <a href="http://minecraft.gamepedia.com/NBT_format">http://minecraft.gamepedia.com/NBT_format</a>
  */
-public abstract class NBT {
+public abstract class NBT<T> {
 	/**
 	 * Constants representing the types defined by the NBT specification.
 	 */
@@ -20,9 +20,14 @@ public abstract class NBT {
 	 * The name of this named binary tag.
 	 */
 	protected String name;
+	/**
+	 * The payload of this named binary tag.
+	 */
+	protected T payload;
 
-	protected NBT(String name) {
+	protected NBT(String name, T payload) {
 		this.name = name;
+		this.payload = payload;
 	}
 
 	/**
@@ -34,7 +39,7 @@ public abstract class NBT {
 	public boolean equals(Object obj) {
 		if (!(obj instanceof NBT))
 			return false;
-		NBT nbt = (NBT) obj;
+		NBT<?> nbt = (NBT<?>) obj;
 		return this.getName() == null && nbt.getName() == null || this.getName().equals(nbt.getName()) && this.getPayload().equals(nbt.getPayload());
 	}
 
@@ -53,7 +58,9 @@ public abstract class NBT {
 	/**
 	 * Get the payload of this tag as the type specified in its subclass.
 	 */
-	public abstract Object getPayload();
+	public T getPayload() {
+		return this.payload;
+	}
 
 	/**
 	 * Get the type of this tag as a <code>Byte</code>.
@@ -70,7 +77,9 @@ public abstract class NBT {
 	/**
 	 * Replaces the payload of this tag with the <code>Object</code> specified.
 	 */
-	public abstract void setPayload(Object payload);
+	public void setPayload(T payload) {
+		this.payload = payload;
+	}
 
 	/**
 	 * Returns a <code>String</code> object representing this tag's value as JSON.

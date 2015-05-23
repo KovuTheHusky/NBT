@@ -5,12 +5,9 @@ import java.nio.ByteBuffer;
 /**
  * A signed integral type that is 2 bytes in length.
  */
-public class NBTShort extends NBT {
-	private short payload;
-
-	public NBTShort(String name, short payload) {
-		super(name);
-		this.payload = payload;
+public class NBTShort extends NBT<Short> {
+	public NBTShort(String name, Short payload) {
+		super(name, payload);
 	}
 
 	@Override
@@ -22,18 +19,8 @@ public class NBTShort extends NBT {
 	}
 
 	@Override
-	public Short getPayload() {
-		return payload;
-	}
-
-	@Override
 	public byte getType() {
 		return NBT.SHORT;
-	}
-
-	@Override
-	public void setPayload(Object payload) {
-		this.payload = (Short) payload;
 	}
 
 	@Override

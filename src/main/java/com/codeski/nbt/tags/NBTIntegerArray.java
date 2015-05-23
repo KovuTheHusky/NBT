@@ -9,12 +9,9 @@ import java.util.ListIterator;
 /**
  * An array of integers with a maximum of ~2,147,483,647 elements.
  */
-public class NBTIntegerArray extends NBT implements List<Integer> {
-	private List<Integer> payload;
-
+public class NBTIntegerArray extends NBT<List<Integer>> implements List<Integer> {
 	public NBTIntegerArray(String name, List<Integer> payload) {
-		super(name);
-		this.payload = payload;
+		super(name, payload);
 	}
 
 	@Override
@@ -59,7 +56,7 @@ public class NBTIntegerArray extends NBT implements List<Integer> {
 		for (int i = 0; i < this.size(); ++i)
 			if (!this.get(i).equals(((NBTIntegerArray) obj).get(i)))
 				return false;
-		return this.getName() == null && ((NBT) obj).getName() == null || this.getName().equals(((NBT) obj).getName());
+		return this.getName() == null && ((NBT<?>) obj).getName() == null || this.getName().equals(((NBT<?>) obj).getName());
 	}
 
 	@Override
@@ -73,11 +70,6 @@ public class NBTIntegerArray extends NBT implements List<Integer> {
 		if (this.getName() != null)
 			length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
 		return length;
-	}
-
-	@Override
-	public List<Integer> getPayload() {
-		return payload;
 	}
 
 	@Override
@@ -138,11 +130,6 @@ public class NBTIntegerArray extends NBT implements List<Integer> {
 	@Override
 	public Integer set(int index, Integer element) {
 		return this.getPayload().set(index, element);
-	}
-
-	@Override
-	public void setPayload(Object payload) {
-		this.payload = (List<Integer>) payload;
 	}
 
 	@Override

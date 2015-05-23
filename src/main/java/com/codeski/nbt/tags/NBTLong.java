@@ -5,12 +5,9 @@ import java.nio.ByteBuffer;
 /**
  * A signed integral type that is 8 bytes in length.
  */
-public class NBTLong extends NBT {
-	private long payload;
-
-	public NBTLong(String name, long payload) {
-		super(name);
-		this.payload = payload;
+public class NBTLong extends NBT<Long> {
+	public NBTLong(String name, Long payload) {
+		super(name, payload);
 	}
 
 	@Override
@@ -22,18 +19,8 @@ public class NBTLong extends NBT {
 	}
 
 	@Override
-	public Long getPayload() {
-		return payload;
-	}
-
-	@Override
 	public byte getType() {
 		return NBT.LONG;
-	}
-
-	@Override
-	public void setPayload(Object payload) {
-		this.payload = (Long) payload;
 	}
 
 	@Override

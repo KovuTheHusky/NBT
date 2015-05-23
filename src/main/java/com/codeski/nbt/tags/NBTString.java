@@ -5,12 +5,9 @@ import java.nio.ByteBuffer;
 /**
  * A UTF-8 string; it has a size, rather than being null terminated.
  */
-public class NBTString extends NBT {
-	private String payload;
-
+public class NBTString extends NBT<String> {
 	public NBTString(String name, String payload) {
-		super(name);
-		this.payload = payload;
+		super(name, payload);
 	}
 
 	@Override
@@ -22,18 +19,8 @@ public class NBTString extends NBT {
 	}
 
 	@Override
-	public String getPayload() {
-		return payload;
-	}
-
-	@Override
 	public byte getType() {
 		return NBT.STRING;
-	}
-
-	@Override
-	public void setPayload(Object payload) {
-		this.payload = (String) payload;
 	}
 
 	@Override

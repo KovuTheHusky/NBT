@@ -9,31 +9,28 @@ import java.util.ListIterator;
 /**
  * Fully formed tags, followed by an end tag.
  */
-public class NBTCompound extends NBT implements List<NBT> {
-	private List<NBT> payload;
-
-	public NBTCompound(String name, List<NBT> payload) {
-		super(name);
-		this.payload = payload;
+public class NBTCompound extends NBT<List<NBT<?>>> implements List<NBT<?>> {
+	public NBTCompound(String name, List<NBT<?>> payload) {
+		super(name, payload);
 	}
 
 	@Override
-	public void add(int index, NBT element) {
+	public void add(int index, NBT<?> element) {
 		this.getPayload().add(index, element);
 	}
 
 	@Override
-	public boolean add(NBT e) {
+	public boolean add(NBT<?> e) {
 		return this.getPayload().add(e);
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends NBT> c) {
+	public boolean addAll(Collection<? extends NBT<?>> c) {
 		return this.getPayload().addAll(c);
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends NBT> c) {
+	public boolean addAll(int index, Collection<? extends NBT<?>> c) {
 		return this.getPayload().addAll(index, c);
 	}
 
@@ -59,16 +56,17 @@ public class NBTCompound extends NBT implements List<NBT> {
 		for (int i = 0; i < this.size(); ++i)
 			if (!this.get(i).equals(((NBTCompound) obj).get(i)))
 				return false;
-		return this.getName() == null && ((NBT) obj).getName() == null || this.getName().equals(((NBT) obj).getName());
+		return this.getName() == null && ((NBT<?>) obj).getName() == null || this.getName().equals(((NBT<?>) obj).getName());
 	}
 
 	@Override
-	public NBT get(int index) {
+	public NBT<?> get(int index) {
 		return this.getPayload().get(index);
 	}
 
-	public <T extends NBT> T get(String name) {
-		for (NBT e : this.getPayload())
+	@SuppressWarnings("unchecked")
+	public <T extends NBT<?>> T get(String name) {
+		for (NBT<?> e : this.getPayload())
 			if (e.getName().equals(name))
 				try {
 					return (T) e;
@@ -83,14 +81,9 @@ public class NBTCompound extends NBT implements List<NBT> {
 		int length = 1;
 		if (this.getName() != null)
 			length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
-		for (NBT e : this.getPayload())
+		for (NBT<?> e : this.getPayload())
 			length += e.getLength();
 		return length;
-	}
-
-	@Override
-	public List<NBT> getPayload() {
-		return payload;
 	}
 
 	@Override
@@ -109,7 +102,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 	}
 
 	@Override
-	public Iterator<NBT> iterator() {
+	public Iterator<NBT<?>> iterator() {
 		return this.getPayload().iterator();
 	}
 
@@ -119,17 +112,17 @@ public class NBTCompound extends NBT implements List<NBT> {
 	}
 
 	@Override
-	public ListIterator<NBT> listIterator() {
+	public ListIterator<NBT<?>> listIterator() {
 		return this.getPayload().listIterator();
 	}
 
 	@Override
-	public ListIterator<NBT> listIterator(int index) {
+	public ListIterator<NBT<?>> listIterator(int index) {
 		return this.getPayload().listIterator(index);
 	}
 
 	@Override
-	public NBT remove(int index) {
+	public NBT<?> remove(int index) {
 		return this.getPayload().remove(index);
 	}
 
@@ -149,13 +142,8 @@ public class NBTCompound extends NBT implements List<NBT> {
 	}
 
 	@Override
-	public NBT set(int index, NBT element) {
+	public NBT<?> set(int index, NBT<?> element) {
 		return this.getPayload().set(index, element);
-	}
-
-	@Override
-	public void setPayload(Object payload) {
-		this.payload = (List<NBT>) payload;
 	}
 
 	@Override
@@ -164,7 +152,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 	}
 
 	@Override
-	public List<NBT> subList(int fromIndex, int toIndex) {
+	public List<NBT<?>> subList(int fromIndex, int toIndex) {
 		return this.getPayload().subList(fromIndex, toIndex);
 	}
 
@@ -184,7 +172,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 		if (this.getName() != null)
 			str += "\"" + this.getName() + "\": ";
 		str += "{ ";
-		for (NBT e : this.getPayload())
+		for (NBT<?> e : this.getPayload())
 			str += e.toJSON() + ", ";
 		str = str.substring(0, str.length() - 2);
 		str += " }";
@@ -206,7 +194,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 			str += "<" + this.getClass().getSimpleName() + " name=\"" + this.getName() + "\">";
 		else
 			str += "<" + this.getClass().getSimpleName() + ">";
-		for (NBT e : this.getPayload())
+		for (NBT<?> e : this.getPayload())
 			str += e.toXML();
 		str += "</" + this.getClass().getSimpleName() + ">";
 		return str;
@@ -214,7 +202,7 @@ public class NBTCompound extends NBT implements List<NBT> {
 
 	@Override
 	protected void writePayload(ByteBuffer bytes) {
-		for (NBT e : this.getPayload())
+		for (NBT<?> e : this.getPayload())
 			bytes.put(e.toNBT());
 		new NBTEnd().writePayload(bytes);
 	}

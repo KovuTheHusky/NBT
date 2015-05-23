@@ -5,9 +5,9 @@ import java.nio.ByteBuffer;
 /**
  * Used to mark the end of compound tags. This tag does not have a name, so it is only ever a single byte 0.
  */
-public class NBTEnd extends NBT {
+public class NBTEnd extends NBT<Byte> {
 	public NBTEnd() {
-		super(null);
+		super(null, (byte) 0);
 	}
 
 	@Override
@@ -16,17 +16,12 @@ public class NBTEnd extends NBT {
 	}
 
 	@Override
-	public Byte getPayload() {
-		return 0;
-	}
-
-	@Override
 	public byte getType() {
 		return NBT.END;
 	}
 
 	@Override
-	public void setPayload(Object payload) {
+	public void setPayload(Byte payload) {
 	}
 
 	@Override

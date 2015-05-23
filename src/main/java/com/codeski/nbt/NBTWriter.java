@@ -23,7 +23,7 @@ public class NBTWriter {
 	/**
 	 * Writes the tag specified and its children as JSON text.
 	 */
-	public void writeJSON(NBT root) {
+	public void writeJSON(NBT<?> root) {
 		try (PrintWriter out = new PrintWriter(file)) {
 			out.println("{ " + root.toJSON() + " }");
 		} catch (IOException e) {
@@ -34,7 +34,7 @@ public class NBTWriter {
 	/**
 	 * Writes the tag specified and its children as NBT binary data.
 	 */
-	public void writeNBT(NBT root) {
+	public void writeNBT(NBT<?> root) {
 		try (DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)))) {
 			out.write(root.toNBT());
 		} catch (IOException e) {
@@ -45,7 +45,7 @@ public class NBTWriter {
 	/**
 	 * Writes the tag specified and its children as XML text.
 	 */
-	public void writeXML(NBT root) {
+	public void writeXML(NBT<?> root) {
 		try (PrintWriter out = new PrintWriter(file)) {
 			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + root.toXML());
 		} catch (IOException e) {

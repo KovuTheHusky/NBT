@@ -9,12 +9,9 @@ import java.util.ListIterator;
 /**
  * An array of bytes with a maximum of ~2,147,483,647 elements.
  */
-public class NBTByteArray extends NBT implements List<Byte> {
-	private List<Byte> payload;
-
+public class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
 	public NBTByteArray(String name, List<Byte> payload) {
-		super(name);
-		this.payload = payload;
+		super(name, payload);
 	}
 
 	@Override
@@ -59,7 +56,7 @@ public class NBTByteArray extends NBT implements List<Byte> {
 		for (int i = 0; i < this.size(); ++i)
 			if (!this.get(i).equals(((NBTByteArray) obj).get(i)))
 				return false;
-		return this.getName() == null && ((NBT) obj).getName() == null || this.getName().equals(((NBT) obj).getName());
+		return this.getName() == null && ((NBT<?>) obj).getName() == null || this.getName().equals(((NBT<?>) obj).getName());
 	}
 
 	@Override
@@ -73,11 +70,6 @@ public class NBTByteArray extends NBT implements List<Byte> {
 		if (this.getName() != null)
 			length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
 		return length;
-	}
-
-	@Override
-	public List<Byte> getPayload() {
-		return payload;
 	}
 
 	@Override
@@ -138,11 +130,6 @@ public class NBTByteArray extends NBT implements List<Byte> {
 	@Override
 	public Byte set(int index, Byte element) {
 		return this.getPayload().set(index, element);
-	}
-
-	@Override
-	public void setPayload(Object payload) {
-		this.payload = (List<Byte>) payload;
 	}
 
 	@Override

@@ -5,12 +5,9 @@ import java.nio.ByteBuffer;
 /**
  * A signed integral type that is 1 byte in length. Sometimes used for booleans.
  */
-public class NBTByte extends NBT {
-	private byte payload;
-
-	public NBTByte(String name, byte payload) {
-		super(name);
-		this.payload = payload;
+public class NBTByte extends NBT<Byte> {
+	public NBTByte(String name, Byte payload) {
+		super(name, payload);
 	}
 
 	@Override
@@ -22,18 +19,8 @@ public class NBTByte extends NBT {
 	}
 
 	@Override
-	public Byte getPayload() {
-		return payload;
-	}
-
-	@Override
 	public byte getType() {
 		return NBT.BYTE;
-	}
-
-	@Override
-	public void setPayload(Object payload) {
-		this.payload = (Byte) payload;
 	}
 
 	@Override

@@ -62,7 +62,7 @@ public class NBTReader {
 		return magic == GZIPInputStream.GZIP_MAGIC;
 	}
 
-	private NBT readPayload(final byte type) throws IOException {
+	private NBT<?> readPayload(final byte type) throws IOException {
 		switch (type) {
 			case NBT.BYTE:
 				return new NBTByte(null, in.readByte());
@@ -90,13 +90,13 @@ public class NBTReader {
 			case NBT.LIST:
 				byte listType = in.readByte();
 				int listLength = in.readInt();
-				List<NBT> list = new ArrayList<NBT>(listLength);
+				List<NBT<?>> list = new ArrayList<NBT<?>>(listLength);
 				for (int i = 0; i < listLength; ++i)
 					list.add(this.readPayload(listType));
 				return new NBTList(null, listType, list);
 			case NBT.COMPOUND:
-				NBT tag;
-				List<NBT> tags = new ArrayList<NBT>();
+				NBT<?> tag;
+				List<NBT<?>> tags = new ArrayList<NBT<?>>();
 				while (!((tag = this.readTag()) instanceof NBTEnd))
 					tags.add(tag);
 				return new NBTCompound(null, tags);
@@ -112,7 +112,7 @@ public class NBTReader {
 		return null;
 	}
 
-	private NBT readTag() throws IOException {
+	private NBT<?> readTag() throws IOException {
 		final byte type = in.readByte();
 		if (type == NBT.END)
 			return new NBTEnd();
@@ -148,13 +148,13 @@ public class NBTReader {
 				case NBT.LIST:
 					byte listType = in.readByte();
 					int listLength = in.readInt();
-					List<NBT> list = new ArrayList<NBT>(listLength);
+					List<NBT<?>> list = new ArrayList<NBT<?>>(listLength);
 					for (int i = 0; i < listLength; ++i)
 						list.add(this.readPayload(listType));
 					return new NBTList(name, listType, list);
 				case NBT.COMPOUND:
-					NBT tag;
-					List<NBT> tags = new ArrayList<NBT>();
+					NBT<?> tag;
+					List<NBT<?>> tags = new ArrayList<NBT<?>>();
 					while (!((tag = this.readTag()) instanceof NBTEnd))
 						tags.add(tag);
 					return new NBTCompound(name, tags);
