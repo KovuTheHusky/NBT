@@ -1,7 +1,6 @@
 package com.codeski.nbt.tags;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -55,6 +54,8 @@ public class NBTByteArray extends NBT implements List<Byte> {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (!(obj instanceof NBTByteArray))
+			return false;
 		for (int i = 0; i < this.size(); ++i)
 			if (!this.get(i).equals(((NBTByteArray) obj).get(i)))
 				return false;
@@ -68,9 +69,9 @@ public class NBTByteArray extends NBT implements List<Byte> {
 
 	@Override
 	public int getLength() {
-		int length = new NBTInteger(null, 0).getLength() + this.getPayload().size(); // Make static getLength() and possibly rename instanced to getSize().
+		int length = new NBTInteger(null, 0).getLength() + this.getPayload().size();
 		if (this.getName() != null)
-			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
+			length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
 		return length;
 	}
 

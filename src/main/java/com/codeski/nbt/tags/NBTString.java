@@ -1,7 +1,6 @@
 package com.codeski.nbt.tags;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 
 /**
  * A UTF-8 string; it has a size, rather than being null terminated.
@@ -16,9 +15,9 @@ public class NBTString extends NBT {
 
 	@Override
 	public int getLength() {
-		int length = new NBTShort(null, (short) 0).getLength() + this.getPayload().getBytes(Charset.forName("UTF-8")).length; // Make static getLength() and possibly rename instanced to getSize().
+		int length = new NBTShort(null, (short) 0).getLength() + this.getPayload().getBytes(NBT.CHARSET).length;
 		if (this.getName() != null)
-			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
+			length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
 		return length;
 	}
 
@@ -47,7 +46,7 @@ public class NBTString extends NBT {
 
 	@Override
 	protected void writePayload(ByteBuffer bytes) {
-		byte[] name = this.getPayload().getBytes(Charset.forName("UTF-8"));
+		byte[] name = this.getPayload().getBytes(NBT.CHARSET);
 		bytes.putShort((short) name.length);
 		bytes.put(name);
 	}

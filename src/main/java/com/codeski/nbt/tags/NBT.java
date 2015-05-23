@@ -13,6 +13,10 @@ public abstract class NBT {
 	 */
 	public static final int END = 0, BYTE = 1, SHORT = 2, INTEGER = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, BYTE_ARRAY = 7, STRING = 8, LIST = 9, COMPOUND = 10, INTEGER_ARRAY = 11;
 	/**
+	 * The charset to use for reading a String from an NBT file.
+	 */
+	protected static final Charset CHARSET = Charset.forName("UTF-8");
+	/**
 	 * The name of this named binary tag.
 	 */
 	protected String name;
@@ -23,12 +27,15 @@ public abstract class NBT {
 
 	/**
 	 * Compares this object to the specified object.
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return this.getName() == null && ((NBT) obj).getName() == null || this.getName().equals(((NBT) obj).getName()) && this.getPayload().equals(((NBT) obj).getPayload());
+		if (!(obj instanceof NBT))
+			return false;
+		NBT nbt = (NBT) obj;
+		return this.getName() == null && nbt.getName() == null || this.getName().equals(nbt.getName()) && this.getPayload().equals(nbt.getPayload());
 	}
 
 	/**
@@ -88,7 +95,7 @@ public abstract class NBT {
 
 	/**
 	 * Returns a <code>String</code> object representing this tag's value.
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

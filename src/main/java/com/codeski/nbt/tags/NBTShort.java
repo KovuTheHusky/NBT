@@ -1,7 +1,6 @@
 package com.codeski.nbt.tags;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 
 /**
  * A signed integral type that is 2 bytes in length.
@@ -18,7 +17,7 @@ public class NBTShort extends NBT {
 	public int getLength() {
 		int length = 2;
 		if (this.getName() != null)
-			length += 3 + (short) this.getName().getBytes(Charset.forName("UTF-8")).length;
+			length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
 		return length;
 	}
 
