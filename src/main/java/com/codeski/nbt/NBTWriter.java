@@ -22,34 +22,34 @@ public class NBTWriter {
 
 	/**
 	 * Writes the tag specified and its children as JSON text.
-	 * 
-	 * @throws IOException
 	 */
-	public void writeJSON(NBT root) throws IOException {
-		PrintWriter out = new PrintWriter(file);
-		out.println("{ " + root.toJSON() + " }");
-		out.close();
+	public void writeJSON(NBT root) {
+		try (PrintWriter out = new PrintWriter(file)) {
+			out.println("{ " + root.toJSON() + " }");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * Writes the tag specified and its children as NBT binary data.
-	 * 
-	 * @throws IOException
 	 */
-	public void writeNBT(NBT root) throws IOException {
-		DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
-		out.write(root.toNBT());
-		out.close();
+	public void writeNBT(NBT root) {
+		try (DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)))) {
+			out.write(root.toNBT());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * Writes the tag specified and its children as XML text.
-	 * 
-	 * @throws IOException
 	 */
-	public void writeXML(NBT root) throws IOException {
-		PrintWriter out = new PrintWriter(file);
-		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + root.toXML());
-		out.close();
+	public void writeXML(NBT root) {
+		try (PrintWriter out = new PrintWriter(file)) {
+			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + root.toXML());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
