@@ -127,7 +127,7 @@ public abstract class NBT<T> {
 
 	private void writeName(ByteBuffer bytes) {
 		bytes.put(this.getType());
-		byte[] name = this.getName().getBytes(Charset.forName("UTF-8"));
+		byte[] name = this.getName().getBytes(NBT.CHARSET);
 		bytes.putShort((short) name.length);
 		bytes.put(name);
 	}
