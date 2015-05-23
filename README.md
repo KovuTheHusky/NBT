@@ -7,8 +7,11 @@ Library for reading, interacting with, and writing NBT data for Minecraft.
 * Website: <http://codeski.com/#nbt>
 * Issues: <https://github.com/Codeski/NBT/issues>
 * Source: <https://github.com/Codeski/NBT>
-* Builds: <https://travis-ci.org/Codeski/NBT>
-* Artifacts: <http://hub.codeski.com/nexus/content/groups/public>
+* Builds:
+  * <https://travis-ci.org/Codeski/NBT>
+  * <http://hub.codeski.com/jenkins/job/NBT>
+* Repository: <http://hub.codeski.com/nexus/content/groups/public>
+* Documentation: <http://hub.codeski.com/javadocs/NBT>
 
 ## License
 
