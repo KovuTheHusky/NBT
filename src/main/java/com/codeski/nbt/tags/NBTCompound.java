@@ -67,12 +67,13 @@ public class NBTCompound extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 
 	@SuppressWarnings("unchecked")
 	public <T extends NBT<?>> T get(String name) {
-		for (NBT<?> e : this.getPayload())
-			if (e.getName().equals(name))
+		for (NBT<?> elem : this.getPayload())
+			if (elem.getName().equals(name))
 				try {
-					return (T) e;
-				} catch (ClassCastException ex) {
-					ex.printStackTrace(System.err);
+					return (T) elem;
+				} catch (ClassCastException e) {
+					System.err.println("There was an error casting your tag. Are you sure you specified the right type?");
+					e.printStackTrace(System.err);
 				}
 		return null;
 	}

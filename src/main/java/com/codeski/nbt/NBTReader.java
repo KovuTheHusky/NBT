@@ -45,6 +45,7 @@ public class NBTReader {
 			else
 				in = new DataInputStream(new FileInputStream(file));
 		} catch (IOException e) {
+			System.err.println("There was an error setting up the data input stream.");
 			e.printStackTrace(System.err);
 		}
 	}
@@ -54,6 +55,7 @@ public class NBTReader {
 		try (RandomAccessFile raf = new RandomAccessFile(f, "r")) {
 			magic = raf.read() & 0xff | raf.read() << 8 & 0xff00;
 		} catch (Throwable e) {
+			System.err.println("There was an error detecting if the NBT file is compressed.");
 			e.printStackTrace(System.err);
 		}
 		return magic == GZIPInputStream.GZIP_MAGIC;
