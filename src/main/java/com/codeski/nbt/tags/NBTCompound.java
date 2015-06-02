@@ -54,6 +54,8 @@ public class NBTCompound extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 		if (!(obj instanceof NBTCompound))
 			return false;
 		NBTCompound that = (NBTCompound) obj;
+		if (this.size() != that.size())
+			return false;
 		for (int i = 0; i < this.size(); ++i)
 			if (!this.get(i).equals(that.get(i)))
 				return false;

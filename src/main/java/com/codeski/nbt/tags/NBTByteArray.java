@@ -54,6 +54,8 @@ public class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
 		if (!(obj instanceof NBTByteArray))
 			return false;
 		NBTByteArray that = (NBTByteArray) obj;
+		if (this.size() != that.size())
+			return false;
 		for (int i = 0; i < this.size(); ++i)
 			if (!this.get(i).equals(that.get(i)))
 				return false;

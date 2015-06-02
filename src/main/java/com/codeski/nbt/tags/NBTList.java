@@ -58,6 +58,8 @@ public class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 		if (!(obj instanceof NBTList))
 			return false;
 		NBTList that = (NBTList) obj;
+		if (this.size() != that.size())
+			return false;
 		for (int i = 0; i < this.size(); ++i)
 			if (!this.get(i).equals(that.get(i)))
 				return false;

@@ -54,6 +54,8 @@ public class NBTIntegerArray extends NBT<List<Integer>> implements List<Integer>
 		if (!(obj instanceof NBTIntegerArray))
 			return false;
 		NBTIntegerArray that = (NBTIntegerArray) obj;
+		if (this.size() != that.size())
+			return false;
 		for (int i = 0; i < this.size(); ++i)
 			if (!this.get(i).equals(that.get(i)))
 				return false;
