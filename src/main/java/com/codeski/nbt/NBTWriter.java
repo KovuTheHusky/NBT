@@ -36,12 +36,24 @@ public class NBTWriter {
 	 * Writes the tag specified and its children as NBT binary data.
 	 */
 	public void writeNBT(NBT<?> root) {
-		try (DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)))) {
-			out.write(root.toNBT());
-		} catch (IOException e) {
-			System.err.println("There was an error writing the data to NBT binary data.");
-			e.printStackTrace(System.err);
-		}
+		this.writeNBT(root, true);
+	}
+
+	public void writeNBT(NBT<?> root, boolean compressed) {
+		if (compressed)
+			try (DataOutputStream out = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)))) {
+				out.write(root.toNBT());
+			} catch (IOException e) {
+				System.err.println("There was an error writing the data to NBT binary data.");
+				e.printStackTrace(System.err);
+			}
+		else
+			try (DataOutputStream out = new DataOutputStream(new FileOutputStream(file))) {
+				out.write(root.toNBT());
+			} catch (IOException e) {
+				System.err.println("There was an error writing the data to NBT binary data.");
+				e.printStackTrace(System.err);
+			}
 	}
 
 	/**
