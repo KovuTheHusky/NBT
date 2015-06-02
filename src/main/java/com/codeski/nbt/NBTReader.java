@@ -78,7 +78,7 @@ public class NBTReader {
 				List<Byte> byteArrayBytes = new ArrayList<Byte>(byteArrayLength);
 				for (int i = 0; i < byteArrayLength; i++)
 					byteArrayBytes.add(in.readByte());
-				return new NBTByteArray(null, byteArrayBytes);
+				return new NBTByteArray(name, byteArrayBytes);
 			case NBT.STRING:
 				short stringLength = in.readShort();
 				byte[] stringBytes = new byte[stringLength];
