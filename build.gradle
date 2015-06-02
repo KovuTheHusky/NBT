@@ -13,6 +13,14 @@ jar {
   }
 }
 
+dependencies {
+  testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+repositories {
+  mavenCentral()
+}
+
 buildscript {
   dependencies {
     classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
@@ -20,7 +28,7 @@ buildscript {
   repositories {
     mavenCentral()
     maven {
-      url "http://repository.jboss.org/nexus/content/groups/public/"
+      url 'http://repository.jboss.org/nexus/content/groups/public/'
     }
   }
 }
