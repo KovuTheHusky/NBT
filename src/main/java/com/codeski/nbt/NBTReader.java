@@ -31,10 +31,10 @@ public class NBTReader {
 	 * Reads the file and returns the root compound tag and its children.
 	 *
 	 * @param file
-	 *            the file to read in as NBT data.
-	 * @return the root NBT tag.
+	 *            The file to read in as NBT data.
+	 * @return The root NBT tag.
 	 * @throws IOException
-	 *             when file does not exist or is not NBT data.
+	 *             If the file does not exist or is not NBT data.
 	 */
 	public static NBTCompound read(File file) throws IOException {
 		return (NBTCompound) new NBTReader(file).readTag();
