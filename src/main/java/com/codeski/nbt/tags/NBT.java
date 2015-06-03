@@ -45,11 +45,15 @@ public abstract class NBT<T> {
 
 	/**
 	 * Get the length of this tag in bytes as an <code>Integer</code>. Includes its type and name if it's not in a list.
+	 *
+	 * @return the length of this tag.
 	 */
 	public abstract int getLength();
 
 	/**
 	 * Get the name of this tag as a <code>String</code>. This will be <code>null</code> if this tag is in a list.
+	 *
+	 * @return the name of this tag.
 	 */
 	public String getName() {
 		return name;
@@ -57,6 +61,8 @@ public abstract class NBT<T> {
 
 	/**
 	 * Get the payload of this tag as the type specified in its subclass.
+	 *
+	 * @return the payload of this tag.
 	 */
 	public T getPayload() {
 		return this.payload;
@@ -64,11 +70,16 @@ public abstract class NBT<T> {
 
 	/**
 	 * Get the type of this tag as a <code>Byte</code>.
+	 *
+	 * @return the type of this tag.
 	 */
 	public abstract byte getType();
 
 	/**
 	 * Replaces the name of this tag with the <code>String</code> specified.
+	 *
+	 * @param name
+	 *            the name of this tag.
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -76,6 +87,9 @@ public abstract class NBT<T> {
 
 	/**
 	 * Replaces the payload of this tag with the <code>Object</code> specified.
+	 *
+	 * @param payload
+	 *            the payload of this tag.
 	 */
 	public void setPayload(T payload) {
 		this.payload = payload;
@@ -83,6 +97,8 @@ public abstract class NBT<T> {
 
 	/**
 	 * Returns a <code>String</code> object representing this tag's value as JSON.
+	 *
+	 * @return a JSON representation of this tag.
 	 */
 	public String toJSON() {
 		if (this.getName() != null)
@@ -93,6 +109,8 @@ public abstract class NBT<T> {
 
 	/**
 	 * Returns a <code>Byte[]</code> representing this tag's value as NBT.
+	 *
+	 * @return an NBT representation of this tag.
 	 */
 	public byte[] toNBT() {
 		ByteBuffer bytes = ByteBuffer.allocate(this.getLength());
@@ -103,6 +121,7 @@ public abstract class NBT<T> {
 	/**
 	 * Returns a <code>String</code> object representing this tag's value.
 	 *
+	 * @return a String representation of this tag.
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -115,6 +134,8 @@ public abstract class NBT<T> {
 
 	/**
 	 * Returns a <code>String</code> object representing this tag's value as XML.
+	 * 
+	 * @return an XML representation of this tag.
 	 */
 	public String toXML() {
 		if (this.getName() != null)

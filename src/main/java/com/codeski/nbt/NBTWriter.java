@@ -22,6 +22,9 @@ public class NBTWriter {
 
 	/**
 	 * Writes the tag specified and its children as JSON text.
+	 * 
+	 * @param root
+	 *            the root tag to write to JSON.
 	 */
 	public void writeJSON(NBT<?> root) {
 		try (PrintWriter out = new PrintWriter(file)) {
@@ -34,6 +37,9 @@ public class NBTWriter {
 
 	/**
 	 * Writes the tag specified and its children as NBT binary data.
+	 * 
+	 * @param root
+	 *            the root tag to write to NBT.
 	 */
 	public void writeNBT(NBT<?> root) {
 		this.writeNBT(root, true);
@@ -58,6 +64,9 @@ public class NBTWriter {
 
 	/**
 	 * Writes the tag specified and its children as XML text.
+	 *
+	 * @param root
+	 *            the root tag to write to XML.
 	 */
 	public void writeXML(NBT<?> root) {
 		try (PrintWriter out = new PrintWriter(file)) {
