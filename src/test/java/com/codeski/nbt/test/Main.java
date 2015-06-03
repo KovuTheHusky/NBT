@@ -76,7 +76,7 @@ public class Main extends TestCase {
 	private boolean testReadWrite(String basename, boolean compressed) throws IOException {
 		File in = new File("src/test/resources/" + basename);
 		byte[] f1 = Files.readAllBytes(in.toPath());
-		new NBTWriter(out).writeNBT(NBTReader.read(in), compressed);
+		NBTWriter.writeNBT(NBTReader.read(in), out, compressed);
 		byte[] f2 = Files.readAllBytes(out.toPath());
 		return Arrays.equals(f1, f2);
 	}

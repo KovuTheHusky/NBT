@@ -30,16 +30,15 @@ public class Main
 				File out = new File(args[1]);
 				String extension = args[1].substring(args[1].lastIndexOf('.') + 1);
 				System.out.println("Writing " + out.getCanonicalPath() + "...");
-				NBTWriter nw = new NBTWriter(out);
 				if (extension.equalsIgnoreCase("dat"))
-					nw.writeNBT(root);
+					NBTWriter.writeNBT(root, out);
 				else if (extension.equalsIgnoreCase("json"))
-					nw.writeJSON(root);
+					NBTWriter.writeJSON(root, out);
 				else if (extension.equalsIgnoreCase("xml"))
-					nw.writeXML(root);
+					NBTWriter.writeXML(root, out);
 				else {
 					System.out.println("File extension was not dat, json, or xml. Writing NBT by default.");
-					nw.writeNBT(root);
+					NBTWriter.writeNBT(root, out);
 				}
 			} else
 				System.out.println("Usage: java -jar " + new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName() + " <file-to-read> <file-to-write>");
@@ -61,23 +60,22 @@ public class Main
 				ret = fc.showSaveDialog(null);
 				if (ret == JFileChooser.APPROVE_OPTION) {
 					File out = fc.getSelectedFile();
-					NBTWriter nw = new NBTWriter(out);
 					if (fc.getFileFilter().equals(nbt))
-						nw.writeNBT(root);
+						NBTWriter.writeNBT(root, out);
 					else if (fc.getFileFilter().equals(json))
-						nw.writeJSON(root);
+						NBTWriter.writeJSON(root, out);
 					else if (fc.getFileFilter().equals(xml))
-						nw.writeXML(root);
+						NBTWriter.writeXML(root, out);
 					else {
 						String ext = out.getName().substring(out.getName().lastIndexOf('.') + 1, out.getName().length());
 						if (ext.equalsIgnoreCase("dat"))
-							nw.writeNBT(root);
+							NBTWriter.writeNBT(root, out);
 						else if (ext.equalsIgnoreCase("json"))
-							nw.writeJSON(root);
+							NBTWriter.writeJSON(root, out);
 						else if (ext.equalsIgnoreCase("xml"))
-							nw.writeXML(root);
+							NBTWriter.writeXML(root, out);
 						else
-							nw.writeNBT(root); // Default case is to write NBT data
+							NBTWriter.writeNBT(root, out); // Default case is to write NBT data
 					}
 				}
 			}
