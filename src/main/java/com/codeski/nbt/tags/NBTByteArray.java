@@ -9,7 +9,7 @@ import java.util.ListIterator;
 /**
  * An array of bytes with a maximum of ~2,147,483,647 elements.
  */
-public class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
+public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
 	public NBTByteArray(String name, List<Byte> payload) {
 		super(name, payload);
 	}

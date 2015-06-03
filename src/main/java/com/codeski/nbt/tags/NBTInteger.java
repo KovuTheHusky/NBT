@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 /**
  * A signed integral type that is 4 bytes in length.
  */
-public class NBTInteger extends NBT<Integer> {
+public final class NBTInteger extends NBT<Integer> {
 	public NBTInteger(String name, Integer payload) {
 		super(name, payload);
 	}

@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 /**
  * A signed floating point type that is 4 bytes in length.
  */
-public class NBTFloat extends NBT<Float> {
+public final class NBTFloat extends NBT<Float> {
 	public NBTFloat(String name, Float payload) {
 		super(name, payload);
 	}

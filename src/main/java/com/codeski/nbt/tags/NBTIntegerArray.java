@@ -9,7 +9,7 @@ import java.util.ListIterator;
 /**
  * An array of integers with a maximum of ~2,147,483,647 elements.
  */
-public class NBTIntegerArray extends NBT<List<Integer>> implements List<Integer> {
+public final class NBTIntegerArray extends NBT<List<Integer>> implements List<Integer> {
 	public NBTIntegerArray(String name, List<Integer> payload) {
 		super(name, payload);
 	}

@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 /**
  * Used to mark the end of compound tags. This tag does not have a name, so it is only ever a single byte 0.
  */
-public class NBTEnd extends NBT<Byte> {
+public final class NBTEnd extends NBT<Byte> {
 	public NBTEnd() {
 		super(null, (byte) 0);
 	}

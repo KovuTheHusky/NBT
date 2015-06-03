@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 /**
  * A UTF-8 string; it has a size, rather than being null terminated.
  */
-public class NBTString extends NBT<String> {
+public final class NBTString extends NBT<String> {
 	public NBTString(String name, String payload) {
 		super(name, payload);
 	}

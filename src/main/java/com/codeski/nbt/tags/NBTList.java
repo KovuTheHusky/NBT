@@ -9,7 +9,7 @@ import java.util.ListIterator;
 /**
  * A list of tag payloads, without repeated tag types or any tag names.
  */
-public class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
+public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 	public static final byte TYPE = 9;
 	private final byte listType;
 

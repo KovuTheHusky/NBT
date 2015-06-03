@@ -9,7 +9,7 @@ import java.util.ListIterator;
 /**
  * Fully formed tags, followed by an end tag.
  */
-public class NBTCompound extends NBT<List<NBT<?>>> implements List<NBT<?>> {
+public final class NBTCompound extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 	public NBTCompound(String name, List<NBT<?>> payload) {
 		super(name, payload);
 	}

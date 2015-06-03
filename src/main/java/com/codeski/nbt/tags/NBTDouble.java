@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 /**
  * A signed floating point type that is 8 bytes in length.
  */
-public class NBTDouble extends NBT<Double> {
+public final class NBTDouble extends NBT<Double> {
 	public NBTDouble(String name, Double payload) {
 		super(name, payload);
 	}
