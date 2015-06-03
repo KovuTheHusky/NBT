@@ -144,7 +144,9 @@ public abstract class NBT<T> {
 			return "<" + this.getClass().getSimpleName() + " payload=\"" + this.getPayload() + "\" />";
 	}
 
-	private void writeTag(ByteBuffer bytes) {
+	protected abstract void writePayload(ByteBuffer bytes);
+
+	protected void writeTag(ByteBuffer bytes) {
 		if (this.getName() != null) {
 			bytes.put(this.getType());
 			byte[] name = this.getName().getBytes(NBT.CHARSET);
@@ -153,6 +155,4 @@ public abstract class NBT<T> {
 		}
 		this.writePayload(bytes);
 	}
-
-	protected abstract void writePayload(ByteBuffer bytes);
 }
