@@ -12,11 +12,8 @@ import org.junit.Test;
 
 import com.codeski.nbt.NBTReader;
 import com.codeski.nbt.NBTWriter;
-import com.codeski.nbt.tags.NBTCompound;
 
 public class Main extends TestCase {
-	private static final File[] in = { new File("src/test/resources/test.nbt"), new File("src/test/resources/bigtest.nbt") };
-	private static final boolean[] inGzip = { false, true };
 	private static final File out = new File("src/test/resources/test.tmp");
 
 	public Main(String testName) throws IOException {
@@ -27,22 +24,60 @@ public class Main extends TestCase {
 	}
 
 	@Test
-	public void testReadWriteFileEquals() throws IOException {
-		for (int i = 0; i < in.length; ++i) {
-			byte[] f1 = Files.readAllBytes(in[i].toPath());
-			new NBTWriter(out).writeNBT(NBTReader.read(in[i]), inGzip[i]);
-			byte[] f2 = Files.readAllBytes(out.toPath());
-			Assert.assertTrue("Testing file equality before and after read and write.", Arrays.equals(f1, f2));
-		}
+	public void testReadWriteBigTest() throws IOException {
+		Assert.assertTrue(this.testReadWrite("bigtest.nbt", true));
 	}
 
 	@Test
-	public void testReadWriteObjectEquals() throws IOException {
-		for (File f : in) {
-			NBTCompound root1 = NBTReader.read(f);
-			new NBTWriter(out).writeNBT(root1);
-			NBTCompound root2 = NBTReader.read(out);
-			Assert.assertTrue("Testing object equality before and after read and write.", root1.equals(root2));
-		}
+	public void testReadWriteLevel() throws IOException {
+		Assert.assertTrue(this.testReadWrite("level.dat", true));
+	}
+
+	@Test
+	public void testReadWriteMineshaft() throws IOException {
+		Assert.assertTrue(this.testReadWrite("Mineshaft.dat", true));
+	}
+
+	@Test
+	public void testReadWriteMonument() throws IOException {
+		Assert.assertTrue(this.testReadWrite("Monument.dat", true));
+	}
+
+	@Test
+	public void testReadWriteStronghold() throws IOException {
+		Assert.assertTrue(this.testReadWrite("Stronghold.dat", true));
+	}
+
+	@Test
+	public void testReadWriteTest() throws IOException {
+		Assert.assertTrue(this.testReadWrite("test.nbt", false));
+	}
+
+	@Test
+	public void testReadWriteVillage() throws IOException {
+		Assert.assertTrue(this.testReadWrite("Village.dat", true));
+	}
+
+	@Test
+	public void testReadWriteVillages() throws IOException {
+		Assert.assertTrue(this.testReadWrite("villages.dat", true));
+	}
+
+	@Test
+	public void testReadWriteVillagesEnd() throws IOException {
+		Assert.assertTrue(this.testReadWrite("villages_end.dat", true));
+	}
+
+	@Test
+	public void testReadWriteVillagesNether() throws IOException {
+		Assert.assertTrue(this.testReadWrite("villages_nether.dat", true));
+	}
+
+	private boolean testReadWrite(String basename, boolean compressed) throws IOException {
+		File in = new File("src/test/resources/" + basename);
+		byte[] f1 = Files.readAllBytes(in.toPath());
+		new NBTWriter(out).writeNBT(NBTReader.read(in), compressed);
+		byte[] f2 = Files.readAllBytes(out.toPath());
+		return Arrays.equals(f1, f2);
 	}
 }
