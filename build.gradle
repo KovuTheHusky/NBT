@@ -53,5 +53,5 @@ publishing {
 
 task documentation(type: Javadoc) {
   source = sourceSets.main.allJava
-  destinationDir = file('/Volumes/Storage/Javadocs/javadocs/NBT/' + version + '/')
+  destinationDir = file('/Storage/Javadocs/javadocs/NBT/' + version + '/')
 }
