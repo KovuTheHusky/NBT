@@ -19,6 +19,13 @@ public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
+		try{
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		Console console = System.console();
 		if (console != null)
 			if (args.length == 2) {
