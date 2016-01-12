@@ -3,24 +3,21 @@ package com.codeski.nbt;
 import java.awt.GraphicsEnvironment;
 import java.io.Console;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.codeski.nbt.tags.NBTCompound;
 
 /**
  * Class allows for GUI and CLI interaction for converting files from NBT to NBT, JSON, or XML.
  */
-public class Main
-{
-    public static void main(String[] args) throws FileNotFoundException, IOException
-    {
+public class Main {
+    public static void main(String[] args) throws IOException {
         Console console = System.console();
         if (console != null)
             if (args.length == 2) {
