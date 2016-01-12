@@ -5,12 +5,12 @@ import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.Exception;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.codeski.nbt.tags.NBTCompound;
 
@@ -21,13 +21,6 @@ public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
-		try{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		
 		Console console = System.console();
 		if (console != null)
 			if (args.length == 2) {
@@ -52,6 +45,11 @@ public class Main
 			} else
 				System.out.println("Usage: java -jar " + new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName() + " <file-to-read> <file-to-write>");
 		else if (!GraphicsEnvironment.isHeadless()) {
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+				e.printStackTrace();
+			}
 			JFileChooser fc = new JFileChooser();
 			FileFilter nbt = new FileNameExtensionFilter("Named Binary Tag (.dat)", "dat");
 			fc.addChoosableFileFilter(nbt);
