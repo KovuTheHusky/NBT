@@ -7,19 +7,11 @@ import java.util.Arrays;
 
 import com.codeski.nbt.NBTReader;
 import com.codeski.nbt.NBTWriter;
-import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class Main extends TestCase {
+public class Main {
     private static final File out = new File("src/test/resources/test.tmp");
-
-    public Main(String testName) throws IOException {
-        super(testName);
-        if (!out.exists())
-            out.createNewFile();
-        out.deleteOnExit();
-    }
 
     @Test
     public void testReadWriteBigTest() throws IOException {
@@ -72,6 +64,9 @@ public class Main extends TestCase {
     }
 
     private boolean testReadWrite(String basename, boolean compressed) throws IOException {
+        if (!out.exists())
+            out.createNewFile();
+        out.deleteOnExit();
         File in = new File("src/test/resources/" + basename);
         byte[] f1 = Files.readAllBytes(in.toPath());
         NBTWriter.writeNBT(NBTReader.read(in), out, compressed);
