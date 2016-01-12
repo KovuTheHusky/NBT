@@ -17,12 +17,10 @@ public class NBTWriter {
     /**
      * Writes the tag specified and its children as JSON text.
      *
-     * @param root
-     *            The root tag to write.
-     * @param file
-     *            The file to write to.
-     * @throws FileNotFoundException
-     *             If the file being written to does not exist.
+     * @param root The root tag to write.
+     * @param file The file to write to.
+     *
+     * @throws FileNotFoundException If the file being written to does not exist.
      */
     public static void writeJSON(NBT<?> root, File file) throws FileNotFoundException {
         new NBTWriter(root, file).writeJSON();
@@ -31,12 +29,10 @@ public class NBTWriter {
     /**
      * Writes the tag specified and its children as NBT binary data.
      *
-     * @param root
-     *            The root tag to write.
-     * @param file
-     *            The file to write to.
-     * @throws FileNotFoundException
-     *             If the file being written to does not exist.
+     * @param root The root tag to write.
+     * @param file The file to write to.
+     *
+     * @throws FileNotFoundException If the file being written to does not exist.
      */
     public static void writeNBT(NBT<?> root, File file) throws FileNotFoundException {
         NBTWriter.writeNBT(root, file, true);
@@ -45,14 +41,11 @@ public class NBTWriter {
     /**
      * Writes the tag specified and its children as NBT binary data.
      *
-     * @param root
-     *            The root tag to write.
-     * @param file
-     *            The file to write to.
-     * @param compressed
-     *            Whether or not the file should be compressed.
-     * @throws FileNotFoundException
-     *             If the file being written to does not exist.
+     * @param root       The root tag to write.
+     * @param file       The file to write to.
+     * @param compressed Whether or not the file should be compressed.
+     *
+     * @throws FileNotFoundException If the file being written to does not exist.
      */
     public static void writeNBT(NBT<?> root, File file, boolean compressed) throws FileNotFoundException {
         new NBTWriter(root, file).writeNBT(compressed);
@@ -61,12 +54,10 @@ public class NBTWriter {
     /**
      * Writes the tag specified and its children as XML text.
      *
-     * @param root
-     *            The root tag to write.
-     * @param file
-     *            The file to write to.
-     * @throws FileNotFoundException
-     *             If the file being written to does not exist.
+     * @param root The root tag to write.
+     * @param file The file to write to.
+     *
+     * @throws FileNotFoundException If the file being written to does not exist.
      */
     public static void writeXML(NBT<?> root, File file) throws FileNotFoundException {
         new NBTWriter(root, file).writeXML();

@@ -78,8 +78,7 @@ public abstract class NBT<T> {
     /**
      * Replaces the name of this tag with the <code>String</code> specified.
      *
-     * @param name
-     *            The name of this tag.
+     * @param name The name of this tag.
      */
     public void setName(String name) {
         this.name = name;
@@ -88,8 +87,7 @@ public abstract class NBT<T> {
     /**
      * Replaces the payload of this tag with the <code>Object</code> specified.
      *
-     * @param payload
-     *            The payload of this tag.
+     * @param payload The payload of this tag.
      */
     public void setPayload(T payload) {
         this.payload = payload;
@@ -124,6 +122,7 @@ public abstract class NBT<T> {
      * Returns a <code>String</code> object representing this tag's value.
      *
      * @return A String representation of this tag.
+     *
      * @see java.lang.Object#toString()
      */
     @Override
