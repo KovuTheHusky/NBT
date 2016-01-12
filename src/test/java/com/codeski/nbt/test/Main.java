@@ -5,13 +5,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 
-import junit.framework.TestCase;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.codeski.nbt.NBTReader;
 import com.codeski.nbt.NBTWriter;
+import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class Main extends TestCase {
     private static final File out = new File("src/test/resources/test.tmp");
