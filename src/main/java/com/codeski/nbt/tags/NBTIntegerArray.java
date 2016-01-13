@@ -158,9 +158,11 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
     @Override
     public String toJSON() {
         String str = "\"" + this.getName() + "\": [ ";
-        for (int e : this.getPayload())
-            str += e + ", ";
-        str = str.substring(0, str.length() - 2);
+        if (!this.getPayload().isEmpty()) {
+            for (int e : this.getPayload())
+                str += e + ", ";
+            str = str.substring(0, str.length() - 2);
+        }
         str += " ]";
         return str;
     }

@@ -176,9 +176,11 @@ public final class NBTCompound extends NBT<List<NBT<?>>> implements List<NBT<?>>
         if (this.getName() != null)
             str += "\"" + this.getName() + "\": ";
         str += "{ ";
-        for (NBT<?> e : this.getPayload())
-            str += e.toJSON() + ", ";
-        str = str.substring(0, str.length() - 2);
+        if (!this.getPayload().isEmpty()) {
+            for (NBT<?> e : this.getPayload())
+                str += e.toJSON() + ", ";
+            str = str.substring(0, str.length() - 2);
+        }
         str += " }";
         return str;
     }
