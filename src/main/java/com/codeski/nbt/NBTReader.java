@@ -1,5 +1,6 @@
 package com.codeski.nbt;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +9,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.InflaterInputStream;
 
 import com.codeski.nbt.tags.NBT;
 import com.codeski.nbt.tags.NBTByte;
@@ -27,6 +29,79 @@ import com.codeski.nbt.tags.NBTString;
  * Class for reading NBT binary data from files.
  */
 public class NBTReader {
+    public static final byte UNKNOWN = 0;
+    public static final byte GZIP = 1;
+    public static final byte ZLIB = 2;
+    private DataInputStream in;
+
+    private NBTReader(File file, byte compression) {
+        switch (compression) {
+            case GZIP:
+                try {
+                    in = new DataInputStream(new GZIPInputStream(new FileInputStream(file)));
+
+                } catch (IOException e) {
+                    System.err.println("There was an error setting up the data input stream.");
+                    e.printStackTrace(System.err);
+                }
+                break;
+            case ZLIB:
+                try {
+                    in = new DataInputStream(new InflaterInputStream(new FileInputStream(file)));
+                } catch (IOException e) {
+                    System.err.println("There was an error setting up the data input stream.");
+                    e.printStackTrace(System.err);
+                }
+                break;
+            default:
+                // Detect whether or not this file is compressed
+                int magic = 0;
+                try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
+                    magic = raf.read() & 0xff | raf.read() << 8 & 0xff00;
+                } catch (IOException e) {
+                    System.err.println("There was an error detecting if the NBT file is compressed.");
+                    e.printStackTrace(System.err);
+                }
+                // Set up the data input stream for reading NBT data
+                try {
+                    if (magic == GZIPInputStream.GZIP_MAGIC)
+                        in = new DataInputStream(new GZIPInputStream(new FileInputStream(file)));
+                    else
+                        in = new DataInputStream(new FileInputStream(file));
+                } catch (IOException e) {
+                    System.err.println("There was an error setting up the data input stream.");
+                    e.printStackTrace(System.err);
+                }
+        }
+
+
+    }
+
+    private NBTReader(byte[] bytes, byte compression) {
+        switch (compression) {
+            case GZIP:
+                try {
+                    in = new DataInputStream(new GZIPInputStream(new ByteArrayInputStream(bytes)));
+
+                } catch (Exception e) {
+                    System.err.println("There was an error setting up the data input stream.");
+                    e.printStackTrace(System.err);
+                }
+                break;
+            case ZLIB:
+                try {
+                    in = new DataInputStream(new InflaterInputStream(new ByteArrayInputStream(bytes)));
+
+                } catch (Exception e) {
+                    System.err.println("There was an error setting up the data input stream.");
+                    e.printStackTrace(System.err);
+                }
+                break;
+            default:
+                System.err.println("It is not possible to autodetect compression of a byte input stream.");
+        }
+    }
+
     /**
      * Reads the file and returns the root compound tag and its children.
      *
@@ -37,30 +112,48 @@ public class NBTReader {
      * @throws IOException If the file does not exist or is not NBT data.
      */
     public static NBTCompound read(File file) throws IOException {
-        return (NBTCompound) new NBTReader(file).readTag();
+        return NBTReader.read(file, NBTReader.UNKNOWN);
     }
 
-    private DataInputStream in;
+    /**
+     * Reads the file and returns the root compound tag and its children.
+     *
+     * @param file        The file to read in as NBT data.
+     * @param compression The type of compression that the NBT file uses.
+     *
+     * @return The root NBT tag.
+     *
+     * @throws IOException If the file does not exist or is not NBT data.
+     */
+    public static NBTCompound read(File file, byte compression) throws IOException {
+        return (NBTCompound) new NBTReader(file, compression).readTag();
+    }
 
-    private NBTReader(File file) {
-        // Detect whether or not this file is compressed
-        int magic = 0;
-        try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
-            magic = raf.read() & 0xff | raf.read() << 8 & 0xff00;
-        } catch (IOException e) {
-            System.err.println("There was an error detecting if the NBT file is compressed.");
-            e.printStackTrace(System.err);
-        }
-        // Set up the data input stream for reading NBT data
-        try {
-            if (magic == GZIPInputStream.GZIP_MAGIC)
-                in = new DataInputStream(new GZIPInputStream(new FileInputStream(file)));
-            else
-                in = new DataInputStream(new FileInputStream(file));
-        } catch (IOException e) {
-            System.err.println("There was an error setting up the data input stream.");
-            e.printStackTrace(System.err);
-        }
+    /**
+     * Reads the byte array and returns the root compound tag and its children.
+     *
+     * @param bytes The byte array to read in as NBT data.
+     *
+     * @return The root NBT tag.
+     *
+     * @throws IOException If the byte array is not NBT data.
+     */
+    public static NBTCompound read(byte[] bytes) throws IOException {
+        return NBTReader.read(bytes, NBTReader.UNKNOWN);
+    }
+
+    /**
+     * Reads the byte array and returns the root compound tag and its children.
+     *
+     * @param bytes       The byte array to read in as NBT data.
+     * @param compression The type of compression that the NBT byte array uses.
+     *
+     * @return The root NBT tag.
+     *
+     * @throws IOException If the byte array is not NBT data.
+     */
+    public static NBTCompound read(byte[] bytes, byte compression) throws IOException {
+        return (NBTCompound) new NBTReader(bytes, compression).readTag();
     }
 
     private NBT<?> readPayload(final byte type, final String name) throws IOException {
