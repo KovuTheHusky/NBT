@@ -37,9 +37,6 @@ jar {
 publishing {
   publications {
     nbt(MavenPublication) {
-      groupId project.group
-      artifactId 'NBT'
-      version project.version
       from components.java
     }
   }
@@ -57,5 +54,5 @@ publishing {
 
 task documentation(type: Javadoc) {
   source = sourceSets.main.allJava
-  destinationDir = file('/Storage/Sites/hub.codeski.com/javadocs/NBT/' + version + '/')
+  destinationDir = file('/Storage/Sites/hub.codeski.com/javadocs/' + name + '/' + version + '/')
 }
