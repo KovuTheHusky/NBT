@@ -37,6 +37,9 @@ jar {
 publishing {
   publications {
     nbt(MavenPublication) {
+      groupId project.group
+      artifactId 'NBT'
+      version project.version
       from components.java
     }
   }
