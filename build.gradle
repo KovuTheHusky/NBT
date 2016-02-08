@@ -54,5 +54,5 @@ publishing {
 
 task documentation(type: Javadoc) {
   source = sourceSets.main.allJava
-  destinationDir = file('/Storage/Sites/hub.codeski.com/javadocs/' + name + '/' + version + '/')
+  destinationDir = file('/Storage/Sites/hub.codeski.com/javadocs/' + project.name + '/' + project.version + '/')
 }
