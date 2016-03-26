@@ -68,6 +68,7 @@ public class MCAReader {
             byte[] data = new byte[length - 1];
             raf.read(data);
             chunks.add(NBTReader.read(data, compression));
+            raf.close();
         }
         return new MCARegion(offsets, lengths, timestamps, chunks);
     }
