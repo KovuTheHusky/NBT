@@ -40,11 +40,11 @@ publishing {
   }
   repositories {
     maven {
-      name 'Codeski'
+      name 'KovuTheHusky'
       if (project.version.endsWith('-SNAPSHOT')) {
-        url 'http://hub.codeski.com/nexus/content/repositories/snapshots/'
+        url 'https://kovuthehusky.com/nexus/content/repositories/snapshots/'
       } else {
-        url 'http://hub.codeski.com/nexus/content/repositories/releases/'
+        url 'https://kovuthehusky.com/nexus/content/repositories/releases/'
       }
     }
   }
@@ -52,5 +52,5 @@ publishing {
 
 task documentation(type: Javadoc) {
   source = sourceSets.main.allJava
-  destinationDir = file('/Storage/Sites/hub.codeski.com/javadocs/' + project.name + '/' + project.version + '/')
+  destinationDir = file('/Storage/Sites/kovuthehusky.com/javadocs/' + project.name + '/' + project.version + '/')
 }
