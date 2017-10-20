@@ -1,18 +1,18 @@
-package com.codeski.nbt.tags;
+package com.kovuthehusky.nbt.tags;
 
 import java.nio.ByteBuffer;
 
 /**
- * A signed integral type that is 4 bytes in length.
+ * A signed integral type that is 2 bytes in length.
  */
-public final class NBTInteger extends NBT<Integer> {
-    public NBTInteger(String name, Integer payload) {
+public final class NBTShort extends NBT<Short> {
+    public NBTShort(String name, Short payload) {
         super(name, payload);
     }
 
     @Override
     public int getLength() {
-        int length = 4;
+        int length = 2;
         if (this.getName() != null)
             length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
         return length;
@@ -20,11 +20,11 @@ public final class NBTInteger extends NBT<Integer> {
 
     @Override
     public byte getType() {
-        return NBT.INTEGER;
+        return NBT.SHORT;
     }
 
     @Override
     protected void writePayload(ByteBuffer bytes) {
-        bytes.putInt(this.getPayload());
+        bytes.putShort(this.getPayload());
     }
 }

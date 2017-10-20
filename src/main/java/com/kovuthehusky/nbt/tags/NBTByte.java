@@ -1,18 +1,18 @@
-package com.codeski.nbt.tags;
+package com.kovuthehusky.nbt.tags;
 
 import java.nio.ByteBuffer;
 
 /**
- * A signed integral type that is 8 bytes in length.
+ * A signed integral type that is 1 byte in length. Sometimes used for booleans.
  */
-public final class NBTLong extends NBT<Long> {
-    public NBTLong(String name, Long payload) {
+public final class NBTByte extends NBT<Byte> {
+    public NBTByte(String name, Byte payload) {
         super(name, payload);
     }
 
     @Override
     public int getLength() {
-        int length = 8;
+        int length = 1;
         if (this.getName() != null)
             length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
         return length;
@@ -20,11 +20,11 @@ public final class NBTLong extends NBT<Long> {
 
     @Override
     public byte getType() {
-        return NBT.LONG;
+        return NBT.BYTE;
     }
 
     @Override
     protected void writePayload(ByteBuffer bytes) {
-        bytes.putLong(this.getPayload());
+        bytes.put(this.getPayload());
     }
 }

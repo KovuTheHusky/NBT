@@ -1,4 +1,4 @@
-package com.codeski.nbt.tags;
+package com.kovuthehusky.nbt.tags;
 
 import java.nio.ByteBuffer;
 import java.util.Collection;
@@ -7,30 +7,34 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * An array of bytes with a maximum of ~2,147,483,647 elements.
+ * A list of tag payloads, without repeated tag types or any tag names.
  */
-public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
-    public NBTByteArray(String name, List<Byte> payload) {
+public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
+    public static final byte TYPE = 9;
+    private final byte listType;
+
+    public NBTList(String name, byte type, List<NBT<?>> payload) {
         super(name, payload);
+        listType = type;
     }
 
     @Override
-    public boolean add(Byte e) {
-        return this.getPayload().add(e);
-    }
-
-    @Override
-    public void add(int index, Byte element) {
+    public void add(int index, NBT<?> element) {
         this.getPayload().add(index, element);
     }
 
     @Override
-    public boolean addAll(Collection<? extends Byte> c) {
+    public boolean add(NBT<?> e) {
+        return this.getPayload().add(e);
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends NBT<?>> c) {
         return this.getPayload().addAll(c);
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends Byte> c) {
+    public boolean addAll(int index, Collection<? extends NBT<?>> c) {
         return this.getPayload().addAll(index, c);
     }
 
@@ -51,9 +55,9 @@ public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof NBTByteArray))
+        if (!(obj instanceof NBTList))
             return false;
-        NBTByteArray that = (NBTByteArray) obj;
+        NBTList that = (NBTList) obj;
         if (this.size() != that.size())
             return false;
         for (int i = 0; i < this.size(); ++i)
@@ -63,21 +67,27 @@ public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
     }
 
     @Override
-    public Byte get(int index) {
+    public NBT<?> get(int index) {
         return this.getPayload().get(index);
     }
 
     @Override
     public int getLength() {
-        int length = new NBTInteger(null, 0).getLength() + this.getPayload().size();
+        int length = new NBTByte(null, (byte) 0).getLength() + new NBTInteger(null, 0).getLength();
         if (this.getName() != null)
             length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
+        for (NBT<?> e : this.getPayload())
+            length += e.getLength();
         return length;
+    }
+
+    public byte getListType() {
+        return listType;
     }
 
     @Override
     public byte getType() {
-        return NBT.BYTE_ARRAY;
+        return TYPE;
     }
 
     @Override
@@ -91,7 +101,7 @@ public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
     }
 
     @Override
-    public Iterator<Byte> iterator() {
+    public Iterator<NBT<?>> iterator() {
         return this.getPayload().iterator();
     }
 
@@ -101,17 +111,17 @@ public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
     }
 
     @Override
-    public ListIterator<Byte> listIterator() {
+    public ListIterator<NBT<?>> listIterator() {
         return this.getPayload().listIterator();
     }
 
     @Override
-    public ListIterator<Byte> listIterator(int index) {
+    public ListIterator<NBT<?>> listIterator(int index) {
         return this.getPayload().listIterator(index);
     }
 
     @Override
-    public Byte remove(int index) {
+    public NBT<?> remove(int index) {
         return this.getPayload().remove(index);
     }
 
@@ -131,7 +141,7 @@ public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
     }
 
     @Override
-    public Byte set(int index, Byte element) {
+    public NBT<?> set(int index, NBT<?> element) {
         return this.getPayload().set(index, element);
     }
 
@@ -141,7 +151,7 @@ public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
     }
 
     @Override
-    public List<Byte> subList(int fromIndex, int toIndex) {
+    public List<NBT<?>> subList(int fromIndex, int toIndex) {
         return this.getPayload().subList(fromIndex, toIndex);
     }
 
@@ -157,40 +167,38 @@ public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
 
     @Override
     public String toJSON() {
-        String str = "\"" + this.getName() + "\": [ ";
+        String str = "\"" + this.getName() + "\":[";
         if (!this.getPayload().isEmpty()) {
-            for (byte e : this.getPayload())
-                str += e + ", ";
-            str = str.substring(0, str.length() - 2);
+            for (NBT<?> e : this.getPayload())
+                str += e.toJSON() + ",";
+            str = str.substring(0, str.length() - 1);
         }
-        str += " ]";
+        str += "]";
         return str;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : this.getPayload())
-            sb.append(',').append(b);
         if (this.getName() != null)
-            return this.getClass().getSimpleName() + " Name:\"" + this.getName() + "\" Payload:" + sb.substring(1);
+            return this.getClass().getSimpleName() + " Name:\"" + this.getName() + "\" " + this.getPayload().size() + " entries";
         else
-            return this.getClass().getSimpleName() + " Payload:" + sb.substring(1);
+            return this.getClass().getSimpleName() + " " + this.getPayload().size() + " entries";
     }
 
     @Override
     public String toXML() {
         String str = "<" + this.getClass().getSimpleName() + " name=\"" + this.getName() + "\">";
-        for (byte e : this.getPayload())
-            str += "<NBTByte payload=\"" + e + "\" />";
+        for (NBT<?> e : this.getPayload())
+            str += e.toXML();
         str += "</" + this.getClass().getSimpleName() + ">";
         return str;
     }
 
     @Override
     protected void writePayload(ByteBuffer bytes) {
+        bytes.put(this.getListType());
         bytes.putInt(this.getPayload().size());
-        for (byte b : this.getPayload())
-            bytes.put(b);
+        for (NBT<?> e : this.getPayload())
+            bytes.put(e.toNBT());
     }
 }

@@ -1,4 +1,4 @@
-package com.codeski.nbt.tags;
+package com.kovuthehusky.nbt.tags;
 
 import java.nio.ByteBuffer;
 

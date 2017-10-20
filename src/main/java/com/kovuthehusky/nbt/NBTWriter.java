@@ -1,4 +1,4 @@
-package com.codeski.nbt;
+package com.kovuthehusky.nbt;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.zip.GZIPOutputStream;
 
-import com.codeski.nbt.tags.NBT;
+import com.kovuthehusky.nbt.tags.NBT;
 
 /**
  * Class for writing NBT structures as NBT, JSON, or XML.
@@ -73,7 +73,7 @@ public class NBTWriter {
 
     private void writeJSON() {
         try (PrintWriter out = new PrintWriter(file)) {
-            out.println("{ " + root.toJSON() + " }");
+            out.println("{" + root.toJSON() + "}");
         } catch (IOException e) {
             System.err.println("There was an error writing the data to JSON text.");
             e.printStackTrace(System.err);

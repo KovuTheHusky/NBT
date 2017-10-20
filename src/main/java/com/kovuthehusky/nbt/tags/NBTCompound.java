@@ -1,4 +1,4 @@
-package com.codeski.nbt.tags;
+package com.kovuthehusky.nbt.tags;
 
 import java.nio.ByteBuffer;
 import java.util.Collection;
@@ -7,15 +7,11 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * A list of tag payloads, without repeated tag types or any tag names.
+ * Fully formed tags, followed by an end tag.
  */
-public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
-    public static final byte TYPE = 9;
-    private final byte listType;
-
-    public NBTList(String name, byte type, List<NBT<?>> payload) {
+public final class NBTCompound extends NBT<List<NBT<?>>> implements List<NBT<?>> {
+    public NBTCompound(String name, List<NBT<?>> payload) {
         super(name, payload);
-        listType = type;
     }
 
     @Override
@@ -55,9 +51,9 @@ public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof NBTList))
+        if (!(obj instanceof NBTCompound))
             return false;
-        NBTList that = (NBTList) obj;
+        NBTCompound that = (NBTCompound) obj;
         if (this.size() != that.size())
             return false;
         for (int i = 0; i < this.size(); ++i)
@@ -71,9 +67,22 @@ public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
         return this.getPayload().get(index);
     }
 
+    @SuppressWarnings("unchecked")
+    public <T extends NBT<?>> T get(String name) {
+        for (NBT<?> elem : this.getPayload())
+            if (elem.getName().equals(name))
+                try {
+                    return (T) elem;
+                } catch (ClassCastException e) {
+                    System.err.println("There was an error casting your tag. Are you sure you specified the right type?");
+                    e.printStackTrace(System.err);
+                }
+        return null;
+    }
+
     @Override
     public int getLength() {
-        int length = new NBTByte(null, (byte) 0).getLength() + new NBTInteger(null, 0).getLength();
+        int length = 1;
         if (this.getName() != null)
             length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
         for (NBT<?> e : this.getPayload())
@@ -81,13 +90,9 @@ public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
         return length;
     }
 
-    public byte getListType() {
-        return listType;
-    }
-
     @Override
     public byte getType() {
-        return TYPE;
+        return NBT.COMPOUND;
     }
 
     @Override
@@ -167,13 +172,16 @@ public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 
     @Override
     public String toJSON() {
-        String str = "\"" + this.getName() + "\": [ ";
+        String str = "";
+        if (this.getName() != null)
+            str += "\"" + this.getName() + "\":";
+        str += "{";
         if (!this.getPayload().isEmpty()) {
             for (NBT<?> e : this.getPayload())
-                str += e.toJSON() + ", ";
-            str = str.substring(0, str.length() - 2);
+                str += e.toJSON() + ",";
+            str = str.substring(0, str.length() - 1);
         }
-        str += " ]";
+        str += "}";
         return str;
     }
 
@@ -187,7 +195,11 @@ public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 
     @Override
     public String toXML() {
-        String str = "<" + this.getClass().getSimpleName() + " name=\"" + this.getName() + "\">";
+        String str = "";
+        if (this.getName() != null)
+            str += "<" + this.getClass().getSimpleName() + " name=\"" + this.getName() + "\">";
+        else
+            str += "<" + this.getClass().getSimpleName() + ">";
         for (NBT<?> e : this.getPayload())
             str += e.toXML();
         str += "</" + this.getClass().getSimpleName() + ">";
@@ -196,9 +208,8 @@ public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 
     @Override
     protected void writePayload(ByteBuffer bytes) {
-        bytes.put(this.getListType());
-        bytes.putInt(this.getPayload().size());
         for (NBT<?> e : this.getPayload())
             bytes.put(e.toNBT());
+        new NBTEnd().writePayload(bytes);
     }
 }

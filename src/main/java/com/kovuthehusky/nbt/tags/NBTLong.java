@@ -1,18 +1,18 @@
-package com.codeski.nbt.tags;
+package com.kovuthehusky.nbt.tags;
 
 import java.nio.ByteBuffer;
 
 /**
- * A signed floating point type that is 4 bytes in length.
+ * A signed integral type that is 8 bytes in length.
  */
-public final class NBTFloat extends NBT<Float> {
-    public NBTFloat(String name, Float payload) {
+public final class NBTLong extends NBT<Long> {
+    public NBTLong(String name, Long payload) {
         super(name, payload);
     }
 
     @Override
     public int getLength() {
-        int length = 4;
+        int length = 8;
         if (this.getName() != null)
             length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
         return length;
@@ -20,11 +20,11 @@ public final class NBTFloat extends NBT<Float> {
 
     @Override
     public byte getType() {
-        return NBT.FLOAT;
+        return NBT.LONG;
     }
 
     @Override
     protected void writePayload(ByteBuffer bytes) {
-        bytes.putFloat(this.getPayload());
+        bytes.putLong(this.getPayload());
     }
 }

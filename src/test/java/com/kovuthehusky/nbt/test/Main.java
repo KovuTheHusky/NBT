@@ -1,12 +1,12 @@
-package com.codeski.nbt.test;
+package com.kovuthehusky.nbt.test;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 
-import com.codeski.nbt.NBTReader;
-import com.codeski.nbt.NBTWriter;
+import com.kovuthehusky.nbt.NBTReader;
+import com.kovuthehusky.nbt.NBTWriter;
 import org.junit.Assert;
 import org.junit.Test;
 

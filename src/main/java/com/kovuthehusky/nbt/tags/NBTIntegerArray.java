@@ -1,4 +1,4 @@
-package com.codeski.nbt.tags;
+package com.kovuthehusky.nbt.tags;
 
 import java.nio.ByteBuffer;
 import java.util.Collection;
@@ -157,13 +157,13 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
 
     @Override
     public String toJSON() {
-        String str = "\"" + this.getName() + "\": [ ";
+        String str = "\"" + this.getName() + "\":[";
         if (!this.getPayload().isEmpty()) {
             for (int e : this.getPayload())
-                str += e + ", ";
-            str = str.substring(0, str.length() - 2);
+                str += e + ",";
+            str = str.substring(0, str.length() - 1);
         }
-        str += " ]";
+        str += "]";
         return str;
     }
 

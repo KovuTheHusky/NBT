@@ -1,4 +1,4 @@
-package com.codeski.nbt.tags;
+package com.kovuthehusky.nbt.tags;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -99,10 +99,18 @@ public abstract class NBT<T> {
      * @return A JSON representation of this tag.
      */
     public String toJSON() {
-        if (this.getName() != null)
-            return "\"" + this.getName() + "\": " + (this instanceof NBTString ? "\"" + this.getPayload() + "\"" : this.getPayload());
-        else
+        if (this.getName() != null) {
+            if (this instanceof NBTString) {
+                String payload = (String) this.getPayload();
+                payload = payload.replace("\\", "\\\\");
+                payload = payload.replace("\"", "\\\"");
+                return "\"" + this.getName() + "\":" + "\"" + payload + "\"";
+            } else {
+                return "\"" + this.getName() + "\":" + this.getPayload();
+            }
+        } else {
             return this instanceof NBTString ? "\"" + this.getPayload() + "\"" : this.getPayload().toString();
+        }
     }
 
     /**

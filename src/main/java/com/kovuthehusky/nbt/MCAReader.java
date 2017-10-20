@@ -1,4 +1,4 @@
-package com.codeski.nbt;
+package com.kovuthehusky.nbt;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import com.codeski.nbt.regions.MCARegion;
-import com.codeski.nbt.tags.NBTCompound;
+import com.kovuthehusky.nbt.regions.MCARegion;
+import com.kovuthehusky.nbt.tags.NBTCompound;
 
 public class MCAReader {
     private File file;

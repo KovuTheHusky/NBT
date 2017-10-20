@@ -1,8 +1,8 @@
-package com.codeski.nbt.regions;
+package com.kovuthehusky.nbt.regions;
 
 import java.util.List;
 
-import com.codeski.nbt.tags.NBTCompound;
+import com.kovuthehusky.nbt.tags.NBTCompound;
 
 public class MCARegion {
     private int[] offsets;

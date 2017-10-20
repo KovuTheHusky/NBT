@@ -1,4 +1,4 @@
-package com.codeski.nbt;
+package com.kovuthehusky.nbt;
 
 import java.awt.GraphicsEnvironment;
 import java.io.Console;
@@ -11,8 +11,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.codeski.nbt.regions.MCARegion;
-import com.codeski.nbt.tags.NBTCompound;
+import com.kovuthehusky.nbt.regions.MCARegion;
+import com.kovuthehusky.nbt.tags.NBTCompound;
 
 /**
  * Class allows for GUI and CLI interaction for converting files from NBT to NBT, JSON, or XML.
@@ -33,7 +33,18 @@ public class Main {
                     root = NBTReader.read(in);
                 File out = new File(args[1]);
                 if (region != null) {
-                    System.err.println("Writing MCA is not implemented at this time."); // TODO: Implement MCA writing.
+                    // Write the file to NBT, JSON, or XML
+                    String extension = args[1].substring(args[1].lastIndexOf('.') + 1);
+                    System.out.println("Writing " + out.getCanonicalPath() + "...");
+                    if (extension.equalsIgnoreCase("dat"))
+                        System.err.println("Writing MCA is not implemented at this time."); // TODO: Implement MCA writing.
+                    else if (extension.equalsIgnoreCase("json"))
+                        MCAWriter.writeJSON(region, out);
+                    else if (extension.equalsIgnoreCase("xml"))
+                        System.err.println("Writing MCA to XML is not implemented at this time."); // TODO: Implement MCA writing.
+                    else {
+                        System.err.println("Writing MCA is not implemented at this time."); // TODO: Implement MCA writing.
+                    }
                 } else {
                     // Write the file to NBT, JSON, or XML
                     String extension = args[1].substring(args[1].lastIndexOf('.') + 1);

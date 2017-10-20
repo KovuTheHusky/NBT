@@ -1,4 +1,4 @@
-package com.codeski.nbt;
+package com.kovuthehusky.nbt;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -11,19 +11,19 @@ import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
-import com.codeski.nbt.tags.NBT;
-import com.codeski.nbt.tags.NBTByte;
-import com.codeski.nbt.tags.NBTByteArray;
-import com.codeski.nbt.tags.NBTCompound;
-import com.codeski.nbt.tags.NBTDouble;
-import com.codeski.nbt.tags.NBTEnd;
-import com.codeski.nbt.tags.NBTFloat;
-import com.codeski.nbt.tags.NBTInteger;
-import com.codeski.nbt.tags.NBTIntegerArray;
-import com.codeski.nbt.tags.NBTList;
-import com.codeski.nbt.tags.NBTLong;
-import com.codeski.nbt.tags.NBTShort;
-import com.codeski.nbt.tags.NBTString;
+import com.kovuthehusky.nbt.tags.NBT;
+import com.kovuthehusky.nbt.tags.NBTByte;
+import com.kovuthehusky.nbt.tags.NBTByteArray;
+import com.kovuthehusky.nbt.tags.NBTCompound;
+import com.kovuthehusky.nbt.tags.NBTDouble;
+import com.kovuthehusky.nbt.tags.NBTEnd;
+import com.kovuthehusky.nbt.tags.NBTFloat;
+import com.kovuthehusky.nbt.tags.NBTInteger;
+import com.kovuthehusky.nbt.tags.NBTIntegerArray;
+import com.kovuthehusky.nbt.tags.NBTList;
+import com.kovuthehusky.nbt.tags.NBTLong;
+import com.kovuthehusky.nbt.tags.NBTShort;
+import com.kovuthehusky.nbt.tags.NBTString;
 
 /**
  * Class for reading NBT binary data from files.
