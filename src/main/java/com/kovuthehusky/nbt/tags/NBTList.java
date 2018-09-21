@@ -167,7 +167,11 @@ public final class NBTList extends NBT<List<NBT<?>>> implements List<NBT<?>> {
 
     @Override
     public String toJSON() {
-        String str = "\"" + this.getName() + "\":[";
+        String str = "";
+        if (this.getName() != null) {
+            str += "\"" + this.getName() + "\":";
+        }
+        str += "[";
         if (!this.getPayload().isEmpty()) {
             for (NBT<?> e : this.getPayload())
                 str += e.toJSON() + ",";

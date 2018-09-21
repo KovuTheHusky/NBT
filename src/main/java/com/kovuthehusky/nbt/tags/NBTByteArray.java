@@ -157,7 +157,11 @@ public final class NBTByteArray extends NBT<List<Byte>> implements List<Byte> {
 
     @Override
     public String toJSON() {
-        String str = "\"" + this.getName() + "\":[";
+        String str = "";
+        if (this.getName() != null) {
+            str += "\"" + this.getName() + "\":";
+        }
+        str += "[";
         if (!this.getPayload().isEmpty()) {
             for (byte e : this.getPayload())
                 str += e + ",";

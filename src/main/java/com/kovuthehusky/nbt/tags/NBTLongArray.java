@@ -7,30 +7,30 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * An array of integers with a maximum of ~2,147,483,647 elements.
+ * An array of longs with a maximum of ~2,147,483,647 elements.
  */
-public final class NBTIntegerArray extends NBT<List<Integer>> implements List<Integer> {
-    public NBTIntegerArray(String name, List<Integer> payload) {
+public final class NBTLongArray extends NBT<List<Long>> implements List<Long> {
+    public NBTLongArray(String name, List<Long> payload) {
         super(name, payload);
     }
 
     @Override
-    public void add(int index, Integer element) {
+    public void add(int index, Long element) {
         this.getPayload().add(index, element);
     }
 
     @Override
-    public boolean add(Integer e) {
+    public boolean add(Long e) {
         return this.getPayload().add(e);
     }
 
     @Override
-    public boolean addAll(Collection<? extends Integer> c) {
+    public boolean addAll(Collection<? extends Long> c) {
         return this.getPayload().addAll(c);
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends Integer> c) {
+    public boolean addAll(int index, Collection<? extends Long> c) {
         return this.getPayload().addAll(index, c);
     }
 
@@ -51,9 +51,9 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof NBTIntegerArray))
+        if (!(obj instanceof NBTLongArray))
             return false;
-        NBTIntegerArray that = (NBTIntegerArray) obj;
+        NBTLongArray that = (NBTLongArray) obj;
         if (this.size() != that.size())
             return false;
         for (int i = 0; i < this.size(); ++i)
@@ -63,13 +63,13 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
     }
 
     @Override
-    public Integer get(int index) {
+    public Long get(int index) {
         return this.getPayload().get(index);
     }
 
     @Override
     public int getLength() {
-        int length = new NBTInteger(null, 0).getLength() + this.getPayload().size() * new NBTInteger(null, 0).getLength();
+        int length = new NBTInteger(null, 0).getLength() + this.getPayload().size() * new NBTLong(null, (long) 0).getLength();
         if (this.getName() != null)
             length += 3 + (short) this.getName().getBytes(NBT.CHARSET).length;
         return length;
@@ -77,7 +77,7 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
 
     @Override
     public byte getType() {
-        return NBT.INTEGER_ARRAY;
+        return NBT.LONG_ARRAY;
     }
 
     @Override
@@ -91,7 +91,7 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
     }
 
     @Override
-    public Iterator<Integer> iterator() {
+    public Iterator<Long> iterator() {
         return this.getPayload().iterator();
     }
 
@@ -101,17 +101,17 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
     }
 
     @Override
-    public ListIterator<Integer> listIterator() {
+    public ListIterator<Long> listIterator() {
         return this.getPayload().listIterator();
     }
 
     @Override
-    public ListIterator<Integer> listIterator(int index) {
+    public ListIterator<Long> listIterator(int index) {
         return this.getPayload().listIterator(index);
     }
 
     @Override
-    public Integer remove(int index) {
+    public Long remove(int index) {
         return this.getPayload().remove(index);
     }
 
@@ -131,7 +131,7 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
     }
 
     @Override
-    public Integer set(int index, Integer element) {
+    public Long set(int index, Long element) {
         return this.getPayload().set(index, element);
     }
 
@@ -141,7 +141,7 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
     }
 
     @Override
-    public List<Integer> subList(int fromIndex, int toIndex) {
+    public List<Long> subList(int fromIndex, int toIndex) {
         return this.getPayload().subList(fromIndex, toIndex);
     }
 
@@ -163,7 +163,7 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
         }
         str += "[";
         if (!this.getPayload().isEmpty()) {
-            for (int e : this.getPayload())
+            for (long e : this.getPayload())
                 str += e + ",";
             str = str.substring(0, str.length() - 1);
         }
@@ -174,7 +174,7 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i : this.getPayload())
+        for (long i : this.getPayload())
             sb.append(',').append(i);
         if (this.getName() != null)
             return this.getClass().getSimpleName() + " Name:\"" + this.getName() + "\" Payload:" + sb.substring(1);
@@ -185,8 +185,8 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
     @Override
     public String toXML() {
         String str = "<" + this.getClass().getSimpleName() + " name=\"" + this.getName() + "\">";
-        for (int e : this.getPayload())
-            str += "<NBTInteger payload=\"" + e + "\" />";
+        for (long e : this.getPayload())
+            str += "<NBTLong payload=\"" + e + "\" />";
         str += "</" + this.getClass().getSimpleName() + ">";
         return str;
     }
@@ -194,7 +194,7 @@ public final class NBTIntegerArray extends NBT<List<Integer>> implements List<In
     @Override
     protected void writePayload(ByteBuffer bytes) {
         bytes.putInt(this.getPayload().size());
-        for (int i : this.getPayload())
-            bytes.putInt(i);
+        for (long i : this.getPayload())
+            bytes.putLong(i);
     }
 }
