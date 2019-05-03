@@ -1,8 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'maven-publish'
-apply plugin: 'maven-publish-auth'
+apply plugin: 'org.ajoberstar.git-publish'
 
 group = 'com.kovuthehusky'
 version = '0.1.3-SNAPSHOT'
@@ -18,10 +17,11 @@ repositories {
 
 buildscript {
   dependencies {
-    classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
+    classpath 'org.ajoberstar:gradle-git-publish:2.1.1'
   }
   repositories {
     mavenCentral()
+    jcenter()
     maven { url 'http://repository.jboss.org/nexus/content/groups/public/' }
   }
 }
@@ -32,22 +32,13 @@ jar {
   }
 }
 
-publishing {
-  publications {
-    nbt(MavenPublication) {
-      from components.java
-    }
-  }
-  repositories {
-    maven {
-      name 'KovuTheHusky'
-      if (project.version.endsWith('-SNAPSHOT')) {
-        url 'https://kovuthehusky.com/nexus/content/repositories/snapshots/'
-      } else {
-        url 'https://kovuthehusky.com/nexus/content/repositories/releases/'
-      }
-    }
-  }
+gitPublish {
+  // where to publish to (repo must exist)
+  // repoUri = 'git@github.com:KovuTheHusky/NBT.git'
+  repoUri = 'https://github.com/KovuTheHusky/NBT.git'
+  // (or 'https://github.com/KovuTheHusky/NBT.git', depending on authentication)
+
+  branch = 'gh-artifacts'
 }
 
 javadoc {
