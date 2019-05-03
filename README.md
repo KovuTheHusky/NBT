@@ -9,4 +9,4 @@ Library for reading, interacting with, and writing NBT data for Minecraft.
 * Source: <https://github.com/KovuTheHusky/NBT>
 * Builds: <https://travis-ci.org/KovuTheHusky/NBT>
 * Repository: <https://kovuthehusky.com/nexus/content/groups/public>
-* Documentation: <https://kovuthehusky.com/javadocs/NBT>
+* Documentation: <https://kovuthehusky.github.io/NBT>
