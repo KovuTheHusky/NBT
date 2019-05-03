@@ -50,7 +50,7 @@ publishing {
   }
 }
 
-task documentation(type: Javadoc) {
-  source = sourceSets.main.allJava
-  destinationDir = file('/Storage/Sites/kovuthehusky.com/javadocs/' + project.name + '/' + project.version + '/')
+javadoc {
+  options.addBooleanOption("-no-module-directories", true)
+  destinationDir = file('_site/' + project.version + '/')
 }
