@@ -1,25 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<metadata modelVersion="1.1.0">
+<metadata>
   <groupId>com.kovuthehusky</groupId>
   <artifactId>NBT</artifactId>
   <version>0.1.3-SNAPSHOT</version>
   <versioning>
     <snapshot>
-      <timestamp>20190503.212518</timestamp>
-      <buildNumber>2</buildNumber>
+      <timestamp>20190503.213653</timestamp>
+      <buildNumber>3</buildNumber>
     </snapshot>
-    <lastUpdated>20190503212518</lastUpdated>
-    <snapshotVersions>
-      <snapshotVersion>
-        <extension>jar</extension>
-        <value>0.1.3-20190503.212518-2</value>
-        <updated>20190503212518</updated>
-      </snapshotVersion>
-      <snapshotVersion>
-        <extension>pom</extension>
-        <value>0.1.3-20190503.212518-2</value>
-        <updated>20190503212518</updated>
-      </snapshotVersion>
-    </snapshotVersions>
+    <lastUpdated>20190503213653</lastUpdated>
   </versioning>
 </metadata>
