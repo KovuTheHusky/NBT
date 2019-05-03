@@ -15,6 +15,7 @@ gradle javadoc publish
 
 cd _site
 
+cd javadoc
 echo -n "<!DOCTYPE html><html lang=\"en\"><head><title>NBT</title></head><body><h1>NBT</h1><hr><ul>" > javadoc/index.html
 for D in *; do
     if [ -d "${D}" ]; then
@@ -22,6 +23,7 @@ for D in *; do
     fi
 done
 echo "</ul><hr></body></html>" >> javadoc/index.html
+cd ..
 
 git config user.email "kovuthehusky@gmail.com"
 git config user.name "KovuTheHusky"
