@@ -6,6 +6,21 @@ fi
 
 set -e
 
+rm -rf _repo
+mkdir _repo
+
+git clone https://${GITHUB_TOKEN}@github.com/KovuTheHusky/NBT.git --branch gh-artifacts _repo
+
+gradle publish
+
+cd _repo
+
+git config user.email "kovuthehusky@gmail.com"
+git config user.name "KovuTheHusky"
+git add --all
+git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
+git push --force origin gh-artifacts
+
 rm -rf _site
 mkdir _site
 

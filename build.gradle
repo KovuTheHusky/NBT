@@ -1,7 +1,9 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'org.ajoberstar.git-publish'
+plugins {
+  id 'java'
+  id 'eclipse'
+  id 'idea'
+  id 'maven-publish'
+}
 
 group = 'com.kovuthehusky'
 version = '0.1.3-SNAPSHOT'
@@ -15,33 +17,28 @@ repositories {
   mavenCentral()
 }
 
-buildscript {
-  dependencies {
-    classpath 'org.ajoberstar:gradle-git-publish:2.1.1'
-  }
-  repositories {
-    mavenCentral()
-    jcenter()
-    maven { url 'http://repository.jboss.org/nexus/content/groups/public/' }
-  }
-}
-
 jar {
   manifest {
     attributes 'Main-Class': 'com.kovuthehusky.nbt.Main'
   }
 }
 
-gitPublish {
-  // where to publish to (repo must exist)
-  // repoUri = 'git@github.com:KovuTheHusky/NBT.git'
-  repoUri = 'https://github.com/KovuTheHusky/NBT.git'
-  // (or 'https://github.com/KovuTheHusky/NBT.git', depending on authentication)
-
-  branch = 'gh-artifacts'
-}
-
 javadoc {
   // options.addBooleanOption("-no-module-directories", true)
   destinationDir = file('_site/' + project.version + '/')
+}
+
+publishing {
+  publications {
+    myLibrary(MavenPublication) {
+      from components.java
+    }
+  }
+
+  repositories {
+    maven {
+      name = 'myRepo'
+      url = "file://${buildDir}/../_repo"
+    }
+  }
 }
