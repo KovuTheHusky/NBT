@@ -6,39 +6,22 @@ fi
 
 set -e
 
-rm -rf _repo
-mkdir _repo
-
-git clone https://${GITHUB_TOKEN}@github.com/KovuTheHusky/NBT.git --branch gh-artifacts _repo
-
-gradle publish
-
-cd _repo
-
-git config user.email "kovuthehusky@gmail.com"
-git config user.name "KovuTheHusky"
-git add --all
-git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
-git push --force origin gh-artifacts
-
-cd ..
-
 rm -rf _site
 mkdir _site
 
 git clone https://${GITHUB_TOKEN}@github.com/KovuTheHusky/NBT.git --branch gh-pages _site
 
-gradle javadoc
+gradle javadoc publish
 
 cd _site
 
-echo -n "<!DOCTYPE html><html lang=\"en\"><head><title>NBT</title></head><body><h1>NBT</h1><hr><ul>" > index.html
+echo -n "<!DOCTYPE html><html lang=\"en\"><head><title>NBT</title></head><body><h1>NBT</h1><hr><ul>" > javadoc/index.html
 for D in *; do
     if [ -d "${D}" ]; then
-        echo -n "<li><a href=\"${D}\">${D}/</a></li>" >> index.html
+        echo -n "<li><a href=\"${D}\">${D}/</a></li>" >> javadoc/index.html
     fi
 done
-echo "</ul><hr></body></html>" >> index.html
+echo "</ul><hr></body></html>" >> javadoc/index.html
 
 git config user.email "kovuthehusky@gmail.com"
 git config user.name "KovuTheHusky"
