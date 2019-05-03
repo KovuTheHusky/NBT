@@ -51,6 +51,8 @@ publishing {
 }
 
 javadoc {
-  options.addBooleanOption("-no-module-directories", true)
+  if (BuildEnvironment.javaVersion.isJava11Compatible()) {
+    options.addBooleanOption("-no-module-directories", true)
+  }
   destinationDir = file('_site/' + project.version + '/')
 }
