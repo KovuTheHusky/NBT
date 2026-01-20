@@ -1,4 +1,4 @@
-# NBT [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive) [![Build Status](https://travis-ci.com/KovuTheHusky/NBT.svg?branch=master)](https://travis-ci.com/KovuTheHusky/NBT)
+# NBT [![Project Status: Unsupported – The project has reached a stable, usable state but the author(s) have ceased all work on it. A new maintainer may be desired.](https://www.repostatus.org/badges/latest/unsupported.svg)](https://www.repostatus.org/#unsupported)
 
 Library for reading, interacting with, and writing NBT data for Minecraft.
 
